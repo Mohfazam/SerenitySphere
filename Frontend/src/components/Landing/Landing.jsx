@@ -10,11 +10,7 @@ import { Pricing } from './Pricing';
 import { BlogHighlights } from './BlogHighlights';
 import { Team } from './Team';
 import {MoodGarden} from './MoodGarden'
-// import { Download } from './Download';
-// import { Newsletter } from './Newsletter';
-// import { Partners } from './Partners';
-// import { GlobeSection } from './GlobeSection';
-import { InteractiveStats } from './InteractiveStats'; // Import the new component
+import { InteractiveStats } from './InteractiveStats'; 
 
 export const Landing = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -40,14 +36,11 @@ export const Landing = () => {
       <HowItWorks />
       <Testimonials />
       <Statistics />
-      <InteractiveStats /> {/* Add the new component here */}
+      <InteractiveStats /> 
       <Pricing />
       <BlogHighlights />
       <MoodGarden />
       <Team />
-      {/* <Download /> */}
-      {/* <Newsletter /> */}
-      {/* <Partners /> */}
       <Footer />
     </div>
   );
