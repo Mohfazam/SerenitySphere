@@ -9,6 +9,7 @@ import { Statistics } from './Statistics';
 import { Pricing } from './Pricing';
 import { BlogHighlights } from './BlogHighlights';
 import { Team } from './Team';
+import {MoodGarden} from './MoodGarden'
 // import { Download } from './Download';
 // import { Newsletter } from './Newsletter';
 // import { Partners } from './Partners';
@@ -42,6 +43,7 @@ export const Landing = () => {
       <InteractiveStats /> {/* Add the new component here */}
       <Pricing />
       <BlogHighlights />
+      <MoodGarden />
       <Team />
       {/* <Download /> */}
       {/* <Newsletter /> */}
