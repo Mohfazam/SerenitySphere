@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
+import { Hero } from './Hero';
 import { InteractiveFeatures } from './InteractiveFeatures';
-import { Testimonials } from './Testimonials';
 import { HowItWorks } from './HowItWorks';
-import { Hero } from './Hero'; // Import the new Hero component
+import { Testimonials } from './Testimonials';
+import { Statistics } from './Statistics'; // New component
+import { Pricing } from './Pricing'; // New component
+import { BlogHighlights } from './BlogHighlights'; // New component
+import { Team } from './Team'; // New component
+import { Download } from './Download'; // New component
+import { Newsletter } from './Newsletter'; // New component
+import { Partners } from './Partners'; // New component
 
 export const Landing = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -32,9 +39,7 @@ export const Landing = () => {
       <Hero />
 
       {/* Features Section */}
-      <section id="features" className="py-20 bg-gray-50 dark:bg-gray-900">
-        {/* Features content */}
-      </section>
+      <InteractiveFeatures />
 
       {/* How It Works Section */}
       <HowItWorks />
@@ -42,8 +47,26 @@ export const Landing = () => {
       {/* Testimonials Section */}
       <Testimonials />
 
-      {/* Interactive Features Section */}
-      <InteractiveFeatures />
+      {/* Statistics Section */}
+      <Statistics />
+
+      {/* Pricing Section */}
+      <Pricing />
+
+      {/* Blog Highlights Section */}
+      <BlogHighlights />
+
+      {/* Team Section */}
+      <Team />
+
+      {/* Download Section */}
+      <Download />
+
+      {/* Newsletter Section */}
+      <Newsletter />
+
+      {/* Partners Section */}
+      <Partners />
 
       {/* Footer */}
       <Footer />
