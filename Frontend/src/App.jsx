@@ -5,7 +5,7 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
-import { Landing } from "./components/Landing";
+import { Landing } from "./components/Landing/Landing";
 
 const router = createBrowserRouter([
   {
