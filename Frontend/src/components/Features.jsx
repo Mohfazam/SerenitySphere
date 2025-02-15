@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ChevronDown, ChevronUp, BarChart, Zap, Heart, Shield } from 'lucide-react';
 
-export const InteractiveFeatures = () => {
+export const Features = () => {
   const [expandedIndex, setExpandedIndex] = React.useState(null);
 
   const toggleAccordion = (index) => {

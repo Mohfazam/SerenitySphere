@@ -25,6 +25,13 @@ export const Team = () => {
       social: { linkedin: '#', twitter: '#' },
       icon: User,
     },
+    {
+        name: 'Alex Johnson',
+        role: 'Product Designer',
+        bio: 'Creating intuitive and user-friendly experiences.',
+        social: { linkedin: '#', twitter: '#' },
+        icon: User,
+      },
   ];
 
   return (

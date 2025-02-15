@@ -2,16 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 import { Hero } from './Hero';
-import { InteractiveFeatures } from './InteractiveFeatures';
+import { Features } from './Features';
 import { HowItWorks } from './HowItWorks';
 import { Testimonials } from './Testimonials';
-import { Statistics } from './Statistics'; // New component
-import { Pricing } from './Pricing'; // New component
-import { BlogHighlights } from './BlogHighlights'; // New component
-import { Team } from './Team'; // New component
-import { Download } from './Download'; // New component
-import { Newsletter } from './Newsletter'; // New component
-import { Partners } from './Partners'; // New component
+import { Statistics } from './Statistics';
+import { Pricing } from './Pricing';
+import { BlogHighlights } from './BlogHighlights';
+import { Team } from './Team';
+// import { Download } from './Download';
+import { Newsletter } from './Newsletter';
+import { Partners } from './Partners';
+// import { GlobeSection } from './GlobeSection'; // Using Three.js directly
 
 export const Landing = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -39,7 +40,7 @@ export const Landing = () => {
       <Hero />
 
       {/* Features Section */}
-      <InteractiveFeatures />
+      <Features />
 
       {/* How It Works Section */}
       <HowItWorks />
@@ -60,13 +61,13 @@ export const Landing = () => {
       <Team />
 
       {/* Download Section */}
-      <Download />
+      {/* <Download /> */}
 
       {/* Newsletter Section */}
-      <Newsletter />
+      {/* <Newsletter /> */}
 
       {/* Partners Section */}
-      <Partners />
+      {/* <Partners /> */}
 
       {/* Footer */}
       <Footer />
