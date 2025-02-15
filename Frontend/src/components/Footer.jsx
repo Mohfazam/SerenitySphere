@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
+import { Facebook, Twitter, Instagram, Linkedin, Brain } from 'lucide-react';
 
 export const Footer = () => {
   return (
@@ -8,7 +8,12 @@ export const Footer = () => {
       <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           <div className="space-y-8 xl:col-span-1">
-            <img className="h-10" src="/logo.svg" alt="SerenitySphere" />
+            <div className="flex items-center">
+              <Brain className="h-8 w-8 text-blue-600 dark:text-blue-400" />
+              <span className="ml-2 text-xl font-bold text-gray-900 dark:text-white">
+                SerenitySphere
+              </span>
+            </div>
             <p className="text-gray-500 dark:text-gray-400 text-base">
               Empowering your mental well-being through technology and community.
             </p>
