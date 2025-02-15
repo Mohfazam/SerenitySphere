@@ -1,12 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Sun, Moon, Brain, Heart, Users, Shield, Download, Smile, Zap, Award, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
-import * as THREE from 'three';
+import { Sun, Moon, Brain, Heart, Users, Shield, Download, Smile, Zap, Award, Facebook, Twitter, Instagram, Linkedin, Globe, MessageCircle, User, Settings, BookOpen, ShieldCheck, ChevronRight } from 'lucide-react';
 
 export const Landing = () => {
   const [darkMode, setDarkMode] = useState(false);
-  const canvasRef = useRef(null);
 
+  // Toggle dark mode
   useEffect(() => {
     const root = window.document.documentElement;
     if (darkMode) {
@@ -15,43 +14,6 @@ export const Landing = () => {
       root.classList.remove('dark');
     }
   }, [darkMode]);
-
-  useEffect(() => {
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-    renderer.setSize(300, 300);
-    canvasRef.current.appendChild(renderer.domElement);
-
-    const geometry = new THREE.SphereGeometry(1, 32, 32);
-    const material = new THREE.MeshPhongMaterial({
-      color: 0x4a90e2,
-      shininess: 100,
-      transparent: true,
-      opacity: 0.8,
-    });
-    const sphere = new THREE.Mesh(geometry, material);
-    scene.add(sphere);
-
-    const light = new THREE.PointLight(0xffffff, 1, 100);
-    light.position.set(10, 10, 10);
-    scene.add(light);
-
-    camera.position.z = 3;
-
-    const animate = () => {
-      requestAnimationFrame(animate);
-      sphere.rotation.x += 0.01;
-      sphere.rotation.y += 0.01;
-      renderer.render(scene, camera);
-    };
-
-    animate();
-
-    return () => {
-      renderer.dispose();
-    };
-  }, []);
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
@@ -72,9 +34,9 @@ export const Landing = () => {
   ];
 
   const testimonials = [
-    { name: 'Sarah Johnson', role: 'Marketing Manager', content: 'SerenitySphere has been a game-changer for my mental health. The personalized insights and community support are invaluable.', image: '/testimonial1.jpg' },
-    { name: 'Michael Chen', role: 'Software Engineer', content: 'As someone who struggles with anxiety, this app has been a lifesaver. The AI-powered recommendations are spot-on.', image: '/testimonial2.jpg' },
-    { name: 'Emily Rodriguez', role: 'Teacher', content: 'I love how easy it is to track my mood and see patterns over time. SerenitySphere has helped me become more self-aware.', image: '/testimonial3.jpg' },
+    { name: 'Sarah Johnson', role: 'Marketing Manager', content: 'SerenitySphere has been a game-changer for my mental health. The personalized insights and community support are invaluable.', icon: User },
+    { name: 'Michael Chen', role: 'Software Engineer', content: 'As someone who struggles with anxiety, this app has been a lifesaver. The AI-powered recommendations are spot-on.', icon: Settings },
+    { name: 'Emily Rodriguez', role: 'Teacher', content: 'I love how easy it is to track my mood and see patterns over time. SerenitySphere has helped me become more self-aware.', icon: BookOpen },
   ];
 
   return (
@@ -160,13 +122,15 @@ export const Landing = () => {
               </motion.div>
             </div>
             <div className="mt-12 relative sm:max-w-lg sm:mx-auto lg:mt-0 lg:max-w-none lg:mx-0 lg:col-span-6 lg:flex lg:items-center">
-              <div ref={canvasRef} className="relative mx-auto w-full rounded-lg shadow-lg lg:max-w-md">
+              <div className="relative mx-auto w-full rounded-lg shadow-lg lg:max-w-md">
                 <motion.div
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 1, delay: 0.6 }}
-                  className="w-full h-64 sm:h-72 md:h-96"
-                />
+                  className="w-full h-64 sm:h-72 md:h-96 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center"
+                >
+                  <Globe className="w-24 h-24 text-blue-600 dark:text-blue-400" />
+                </motion.div>
               </div>
             </div>
           </div>
@@ -262,8 +226,9 @@ export const Landing = () => {
                 transition={{ duration: 0.5 }}
                 className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 flex flex-col items-center"
               >
-                <img className="w-16 h-16 rounded-full mb-4" src={testimonial.image || "/placeholder.svg"} alt={testimonial.name} />
-                <p className="text-gray-600 dark:text-gray-400 text-center mb-4">{testimonial.content}</p>
+                <div className="w-16 h-16 mb-4 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
+                  <testimonial.icon className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+                </div>
                 <p className="text-gray-600 dark:text-gray-400 text-center mb-4">{testimonial.content}</p>
                 <h4 className="font-semibold text-gray-900 dark:text-white">{testimonial.name}</h4>
                 <p className="text-sm text-gray-500 dark:text-gray-400">{testimonial.role}</p>
@@ -340,4 +305,3 @@ export const Landing = () => {
     </div>
   );
 };
-
