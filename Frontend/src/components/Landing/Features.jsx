@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { ChevronDown, ChevronUp, BarChart, Zap, Heart, Shield, Smile, Star, Users, Lock, Activity, Brain, Leaf, Users2, Calendar, MessageCircle } from 'lucide-react';
 
@@ -48,9 +48,41 @@ export const Features = () => {
     },
   ];
 
+  // Floating particles effect
+  useEffect(() => {
+    const particles = [];
+    const container = document.querySelector('.particles-container');
+
+    for (let i = 0; i < 30; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'absolute w-1 h-1 bg-white rounded-full opacity-30';
+      particle.style.left = `${Math.random() * 100}%`;
+      particle.style.top = `${Math.random() * 100}%`;
+      container.appendChild(particle);
+      particles.push(particle);
+    }
+
+    const animateParticles = () => {
+      particles.forEach((particle) => {
+        const speed = Math.random() * 2 + 1;
+        particle.style.transform = `translateY(${Math.sin(Date.now() * 0.001 * speed) * 10}px)`;
+      });
+      requestAnimationFrame(animateParticles);
+    };
+
+    animateParticles();
+
+    return () => {
+      particles.forEach((particle) => particle.remove());
+    };
+  }, []);
+
   return (
-    <section className="py-20 bg-gradient-to-br from-gray-900 to-gray-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-20 bg-gradient-to-br from-gray-900 to-gray-800 relative overflow-hidden">
+      {/* Floating Particles */}
+      <div className="particles-container absolute inset-0 pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Animated Stats Section */}
         <div className="text-center mb-20">
           <motion.h2
