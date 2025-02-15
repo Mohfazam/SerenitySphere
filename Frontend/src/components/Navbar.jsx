@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Sun, Moon } from 'lucide-react';
+import { Sun, Moon, Brain } from 'lucide-react';
 
 export const Navbar = ({ darkMode, toggleDarkMode }) => {
   return (
@@ -8,8 +8,11 @@ export const Navbar = ({ darkMode, toggleDarkMode }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
-            <a href="#" className="flex-shrink-0">
-              <img className="h-8 w-auto" src="/logo.svg" alt="SerenitySphere" />
+            <a href="#" className="flex-shrink-0 flex items-center">
+              <Brain className="h-8 w-8 text-blue-600 dark:text-blue-400" />
+              <span className="ml-2 text-xl font-bold text-gray-900 dark:text-white">
+                SerenitySphere
+              </span>
             </a>
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-4">
