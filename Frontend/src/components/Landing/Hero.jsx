@@ -4,7 +4,7 @@ import { Zap, Heart, Star, ChevronRight, Brain, Smile } from 'lucide-react';
 
 export const Hero = () => {
   return (
-    <section id="home" className="relative overflow-hidden py-20 sm:py-32 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-gray-900 dark:to-gray-800"> {/* Add id="home" here */}
+    <section className="relative overflow-hidden py-20 sm:py-32 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-gray-900 dark:to-gray-800">
       {/* Background Floating Circles */}
       <motion.div
         initial={{ opacity: 0 }}
