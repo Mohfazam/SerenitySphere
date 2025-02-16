@@ -28,8 +28,8 @@ export const Team = () => {
     {
       name: 'Syed Ahmed',
       role: 'QA Tester',
-      bio: 'QA Tester focused on ensuring smooth performance, reliability, and a great user experience.',
-      social: { linkedin: '#', twitter: '#' },
+      bio: 'Dedicated QA Tester focused on identifying issues, ensuring reliability, and enhancing user experience.',
+      social: { linkedin: 'https://www.linkedin.com/in', twitter: 'https://x.com' },
       icon: User,
     },
   ];
