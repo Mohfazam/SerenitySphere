@@ -83,8 +83,8 @@ Access to timely, personalized, and effective mental health support is often lim
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/Amaanx6/Serenity-Sphere.git  
-   cd Serenity-Sphere  
+   git clone https://github.com/Mohfazam/SerenitySphere.git
+   cd SerenitySphere  
 
 3. Install dependencies:
    ```bash  
