@@ -74,7 +74,7 @@ Access to timely, personalized, and effective mental health support is often lim
 | **Frontend** | React.js, Vite, TailwindCSS |
 | **Backend** | Node.js, Express.js |
 | **Database** | MongoDB |
-| **AI/ML** | Natural Language Processing (NLP), Sentiment Analysis |
+| **AI/ML** | Gemini |
 | **Deployment** | Vercel |
 
 ---
