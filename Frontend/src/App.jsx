@@ -11,6 +11,7 @@ import { Pricing } from './components/Landing/Pricing';
 import { HowItWorks } from "./components/Landing/HowItWorks";
 import {Hero} from "./components/Landing/Hero";
 import {Statistics} from "./components/Landing/Statistics";
+import {Footer} from "./components/Footer";
 
 const router = createBrowserRouter([
   {
