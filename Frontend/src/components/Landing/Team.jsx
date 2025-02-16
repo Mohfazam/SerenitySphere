@@ -21,15 +21,15 @@ export const Team = () => {
     {
       name: 'Kafia Kauser',
       role: 'Research & Presenter',
-      bio: 'Kafia Kauser is a tech enthusiast exploring AI, web development, and innovation through hackathons, writing, and projects.',
+      bio: 'A tech enthusiast exploring AI, web development, and innovation through hackathons, writing, and projects.',
       social: { linkedin: 'https://www.linkedin.com/in/kafia-kauser-019647294', twitter: 'https://x.com/KauserKafia' },
       icon: User,
     },
     {
       name: 'Syed Ahmed',
       role: 'QA Tester',
-      bio: 'QA Tester focused on ensuring smooth performance, reliability, and a great user experience.',
-      social: { linkedin: '#', twitter: '#' },
+      bio: 'Dedicated QA Tester focused on identifying issues, ensuring reliability, and enhancing user experience.',
+      social: { linkedin: 'https://www.linkedin.com/in', twitter: 'https://x.com' },
       icon: User,
     },
   ];
