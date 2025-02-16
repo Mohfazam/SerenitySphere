@@ -7,31 +7,31 @@ export const Team = () => {
     {
       name: 'Mohammad Sarwar Khan',
       role: 'Team Lead',
-      bio: 'Passionate about mental health and technology.',
+      bio: "Building dreams with the MERN stack's might, crafting apps that shine so bright. A 4th-sem intern on a soaring flight, coding stories deep into the night.",
       social: { linkedin: 'https://www.linkedin.com/in/mohammed-sarwar-khan', twitter: 'https://x.com/mohfazam' },
       icon: User,
     },
     {
       name: 'Md Mubashiruddin',
       role: 'Lead Developer',
-      bio: 'Dedicated to helping people achieve mental well-being.',
+      bio: 'MERN Stack Developer with expertise in Data structures, building scalable full-stack solutions. Crafting dynamic, high-performance applications, driven by innovation, problem-solving, and emerging technologies.',
       social: { linkedin: 'https://www.linkedin.com/in/md-mubashiruddin', twitter: 'https://x.com/amaanx_6' },
       icon: User,
     },
     {
       name: 'Kafia Kauser',
-      role: 'Research & Pitch Strategist',
-      bio: 'Researches, crafts pitches, and delivers impactful presentations.',
-      social: { linkedin: '#', twitter: '#' },
+      role: 'Research & Presenter',
+      bio: 'Kafia Kauser is a tech enthusiast passionate about innovation, problem-solving, and impact. With experience in hackathons, technical writing, and project development, she explores AI, web development, and beyond.',
+      social: { linkedin: 'https://www.linkedin.com/in/kafia-kauser-019647294', twitter: 'https://x.com/KauserKafia' },
       icon: User,
     },
     {
-        name: 'Syed Ahmed',
-        role: 'Product Designer',
-        bio: 'Creating intuitive and user-friendly experiences.',
-        social: { linkedin: '#', twitter: '#' },
-        icon: User,
-      },
+      name: 'Syed Ahmed',
+      role: 'QA Tester',
+      bio: 'QA Tester ensuring flawless functionality through rigorous testing.',
+      social: { linkedin: '#', twitter: '#' },
+      icon: User,
+    },
   ];
 
   return (
@@ -45,7 +45,7 @@ export const Team = () => {
             The passionate people behind SerenitySphere.
           </p>
         </div>
-        <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-8">
+        <div className="mt-10 grid grid-cols-2 gap-8">
           {teamMembers.map((member, index) => (
             <motion.div
               key={index}
@@ -53,7 +53,7 @@ export const Team = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.2 }}
               viewport={{ once: true }}
-              className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+              className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col items-center text-center" // Added flex and text-center
             >
               <div className="flex items-center justify-center">
                 <member.icon className="w-12 h-12 text-blue-600 dark:text-blue-400" />
@@ -61,7 +61,7 @@ export const Team = () => {
               <h3 className="mt-4 text-xl font-bold text-gray-900 dark:text-white">{member.name}</h3>
               <p className="mt-2 text-gray-500 dark:text-gray-400">{member.role}</p>
               <p className="mt-4 text-gray-500 dark:text-gray-400">{member.bio}</p>
-              <div className="mt-4 flex space-x-4">
+              <div className="mt-4 flex space-x-4 justify-center"> {/* Added justify-center */}
                 <a href={member.social.linkedin} className="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400">
                   <Linkedin className="w-6 h-6" />
                 </a>
