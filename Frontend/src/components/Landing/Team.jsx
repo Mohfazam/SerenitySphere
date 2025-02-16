@@ -15,7 +15,7 @@ export const Team = () => {
       name: 'Md Mubashiruddin',
       role: 'Lead Developer',
       bio: 'Dedicated to helping people achieve mental well-being.',
-      social: { linkedin: 'www.linkedin.com/in/md-mubashiruddin', twitter: 'https://x.com/amaanx_6' },
+      social: { linkedin: 'https://www.linkedin.com/in/md-mubashiruddin', twitter: 'https://x.com/amaanx_6' },
       icon: User,
     },
     {
