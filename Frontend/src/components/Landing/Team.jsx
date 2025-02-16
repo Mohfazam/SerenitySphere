@@ -5,28 +5,28 @@ import { User, Linkedin, Twitter } from 'lucide-react';
 export const Team = () => {
   const teamMembers = [
     {
-      name: 'John Doe',
-      role: 'CEO & Founder',
+      name: 'Mohammad Sarwar Khan',
+      role: 'Team Lead',
       bio: 'Passionate about mental health and technology.',
-      social: { linkedin: '#', twitter: '#' },
+      social: { linkedin: 'https://www.linkedin.com/in/mohammed-sarwar-khan', twitter: 'https://x.com/mohfazam' },
       icon: User,
     },
     {
-      name: 'Jane Smith',
-      role: 'Lead Therapist',
+      name: 'Md Mubashiruddin',
+      role: 'Lead Developer',
       bio: 'Dedicated to helping people achieve mental well-being.',
+      social: { linkedin: 'www.linkedin.com/in/md-mubashiruddin', twitter: 'https://x.com/amaanx_6' },
+      icon: User,
+    },
+    {
+      name: 'Kafia Kauser',
+      role: 'Research & Pitch Strategist',
+      bio: 'Researches, crafts pitches, and delivers impactful presentations.',
       social: { linkedin: '#', twitter: '#' },
       icon: User,
     },
     {
-      name: 'Alex Johnson',
-      role: 'Product Designer',
-      bio: 'Creating intuitive and user-friendly experiences.',
-      social: { linkedin: '#', twitter: '#' },
-      icon: User,
-    },
-    {
-        name: 'Alex Johnson',
+        name: 'Syed Ahmed',
         role: 'Product Designer',
         bio: 'Creating intuitive and user-friendly experiences.',
         social: { linkedin: '#', twitter: '#' },
