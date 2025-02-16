@@ -21,7 +21,7 @@ export const Team = () => {
     {
       name: 'Kafia Kauser',
       role: 'Research & Presenter',
-      bio: 'Kafia Kauser is a tech enthusiast exploring AI, web development, and innovation through hackathons, writing, and projects.',
+      bio: 'A tech enthusiast exploring AI, web development, and innovation through hackathons, writing, and projects.',
       social: { linkedin: 'https://www.linkedin.com/in/kafia-kauser-019647294', twitter: 'https://x.com/KauserKafia' },
       icon: User,
     },
