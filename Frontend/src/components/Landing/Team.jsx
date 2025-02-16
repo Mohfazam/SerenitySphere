@@ -26,16 +26,16 @@ export const Team = () => {
       icon: User,
     },
     {
-        name: 'Syed Ahmed',
-        role: 'Product Designer',
-        bio: 'Creating intuitive and user-friendly experiences.',
-        social: { linkedin: '#', twitter: '#' },
-        icon: User,
-      },
+      name: 'Syed Ahmed',
+      role: 'Product Designer',
+      bio: 'Creating intuitive and user-friendly experiences.',
+      social: { linkedin: '#', twitter: '#' },
+      icon: User,
+    },
   ];
 
   return (
-    <section className="py-20 bg-gray-50 dark:bg-gray-900">
+    <section id="team" className="py-20 bg-gray-50 dark:bg-gray-900"> {/* Add id="team" here */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">

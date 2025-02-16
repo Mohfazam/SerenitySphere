@@ -12,9 +12,12 @@ export const Navbar = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
-  const handleNavigation = (path) => {
-    console.log(`Navigating to: ${path}`);
-    setIsMobileMenuOpen(false);
+  const handleNavigation = (id) => {
+    const section = document.getElementById(id);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+    setIsMobileMenuOpen(false); // Close mobile menu after navigation
   };
 
   return (
@@ -29,7 +32,7 @@ export const Navbar = () => {
             <motion.a
               href="#"
               className="flex-shrink-0 flex items-center"
-              onClick={() => handleNavigation('/')}
+              onClick={() => handleNavigation('home')} // Scroll to "home" section
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
             >
@@ -52,7 +55,7 @@ export const Navbar = () => {
                 <motion.a
                   key={item}
                   href={`#${item.toLowerCase()}`}
-                  onClick={() => handleNavigation(`/${item.toLowerCase()}`)}
+                  onClick={() => handleNavigation(item.toLowerCase())}
                   className="relative px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 transition-colors duration-200 hover:text-blue-600 dark:hover:text-blue-400"
                   whileHover={{ scale: 1.05 }}
                 >
@@ -88,7 +91,7 @@ export const Navbar = () => {
                 <motion.a
                   key={item}
                   href={`#${item.toLowerCase()}`}
-                  onClick={() => handleNavigation(`/${item.toLowerCase()}`)}
+                  onClick={() => handleNavigation(item.toLowerCase())}
                   className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
                   whileHover={{ scale: 1.05 }}
                 >
