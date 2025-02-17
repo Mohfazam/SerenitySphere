@@ -13,17 +13,18 @@ import {
   Info,
   ChevronDown,
   ChevronUp,
-  Sun,
-  Moon,
   Droplet,
   Bed,
   HeartPulse,
-  Users,
   Target,
   Cloud,
+  Sun,
+  Moon,
 } from "lucide-react"
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js"
 import { Bar } from "react-chartjs-2"
+import Particles from "react-tsparticles"
+import { loadFull } from "tsparticles"
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
@@ -43,16 +44,16 @@ export const MoodTracker = () => {
   const [sleepHours, setSleepHours] = useState("")
   const [waterIntake, setWaterIntake] = useState("")
   const [exerciseMinutes, setExerciseMinutes] = useState("")
-  const [socialInteractions, setSocialInteractions] = useState("")
-  const [productivityRating, setProductivityRating] = useState(5)
-  const [stressLevel, setStressLevel] = useState(5)
   const [gratitudeList, setGratitudeList] = useState("")
   const [goals, setGoals] = useState("")
   const [weather, setWeather] = useState("")
   const [view, setView] = useState("input")
-  const [selectedDate, setSelectedDate] = useState(new Date())
   const [showInfo, setShowInfo] = useState(false)
   const [expandedSection, setExpandedSection] = useState(null)
+
+  const particlesInit = async (engine) => {
+    await loadFull(engine)
+  }
 
   useEffect(() => {
     const storedMoodEntries = localStorage.getItem("moodEntries")
@@ -76,9 +77,6 @@ export const MoodTracker = () => {
       sleepHours: Number.parseFloat(sleepHours),
       waterIntake: Number.parseFloat(waterIntake),
       exerciseMinutes: Number.parseInt(exerciseMinutes),
-      socialInteractions: Number.parseInt(socialInteractions),
-      productivityRating,
-      stressLevel,
       gratitudeList: gratitudeList.split("\n"),
       goals: goals.split("\n"),
       weather,
@@ -95,9 +93,6 @@ export const MoodTracker = () => {
     setSleepHours("")
     setWaterIntake("")
     setExerciseMinutes("")
-    setSocialInteractions("")
-    setProductivityRating(5)
-    setStressLevel(5)
     setGratitudeList("")
     setGoals("")
     setWeather("")
@@ -204,6 +199,222 @@ export const MoodTracker = () => {
         </AnimatePresence>
       </div>
 
+      {/* Sleep Tracker */}
+      <div className="bg-gray-800 p-4 rounded-lg">
+        <button
+          onClick={() => toggleSection("sleep")}
+          className="w-full flex justify-between items-center"
+        >
+          <div className="flex items-center space-x-2">
+            <Bed size={20} />
+            <span className="text-lg font-semibold">Sleep Tracker</span>
+          </div>
+          {expandedSection === "sleep" ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+        </button>
+        <AnimatePresence>
+          {expandedSection === "sleep" && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+              className="mt-4"
+            >
+              <input
+                type="number"
+                value={sleepHours}
+                onChange={(e) => setSleepHours(e.target.value)}
+                placeholder="Sleep hours"
+                className="w-full p-2 bg-gray-700 rounded-md text-white"
+              />
+              <div className="mt-2 h-2 bg-gray-600 rounded-full">
+                <div
+                  className="h-full bg-blue-500 rounded-full"
+                  style={{ width: `${(sleepHours / 12) * 100}%` }}
+                />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* Water Intake Tracker */}
+      <div className="bg-gray-800 p-4 rounded-lg">
+        <button
+          onClick={() => toggleSection("water")}
+          className="w-full flex justify-between items-center"
+        >
+          <div className="flex items-center space-x-2">
+            <Droplet size={20} />
+            <span className="text-lg font-semibold">Water Intake</span>
+          </div>
+          {expandedSection === "water" ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+        </button>
+        <AnimatePresence>
+          {expandedSection === "water" && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+              className="mt-4"
+            >
+              <input
+                type="number"
+                value={waterIntake}
+                onChange={(e) => setWaterIntake(e.target.value)}
+                placeholder="Water intake (liters)"
+                className="w-full p-2 bg-gray-700 rounded-md text-white"
+              />
+              <div className="mt-2 h-2 bg-gray-600 rounded-full">
+                <div
+                  className="h-full bg-green-500 rounded-full"
+                  style={{ width: `${(waterIntake / 4) * 100}%` }}
+                />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* Exercise Tracker */}
+      <div className="bg-gray-800 p-4 rounded-lg">
+        <button
+          onClick={() => toggleSection("exercise")}
+          className="w-full flex justify-between items-center"
+        >
+          <div className="flex items-center space-x-2">
+            <HeartPulse size={20} />
+            <span className="text-lg font-semibold">Exercise Tracker</span>
+          </div>
+          {expandedSection === "exercise" ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+        </button>
+        <AnimatePresence>
+          {expandedSection === "exercise" && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+              className="mt-4"
+            >
+              <input
+                type="number"
+                value={exerciseMinutes}
+                onChange={(e) => setExerciseMinutes(e.target.value)}
+                placeholder="Exercise minutes"
+                className="w-full p-2 bg-gray-700 rounded-md text-white"
+              />
+              <div className="mt-2 h-2 bg-gray-600 rounded-full">
+                <div
+                  className="h-full bg-purple-500 rounded-full"
+                  style={{ width: `${(exerciseMinutes / 120) * 100}%` }}
+                />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* Gratitude Journal */}
+      <div className="bg-gray-800 p-4 rounded-lg">
+        <button
+          onClick={() => toggleSection("gratitude")}
+          className="w-full flex justify-between items-center"
+        >
+          <div className="flex items-center space-x-2">
+            <Sun size={20} />
+            <span className="text-lg font-semibold">Gratitude Journal</span>
+          </div>
+          {expandedSection === "gratitude" ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+        </button>
+        <AnimatePresence>
+          {expandedSection === "gratitude" && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+              className="mt-4"
+            >
+              <textarea
+                value={gratitudeList}
+                onChange={(e) => setGratitudeList(e.target.value)}
+                placeholder="What are you grateful for today?"
+                className="w-full p-2 bg-gray-700 rounded-md text-white"
+                rows="3"
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* Goals for Tomorrow */}
+      <div className="bg-gray-800 p-4 rounded-lg">
+        <button
+          onClick={() => toggleSection("goals")}
+          className="w-full flex justify-between items-center"
+        >
+          <div className="flex items-center space-x-2">
+            <Target size={20} />
+            <span className="text-lg font-semibold">Goals for Tomorrow</span>
+          </div>
+          {expandedSection === "goals" ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+        </button>
+        <AnimatePresence>
+          {expandedSection === "goals" && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+              className="mt-4"
+            >
+              <textarea
+                value={goals}
+                onChange={(e) => setGoals(e.target.value)}
+                placeholder="What are your goals for tomorrow?"
+                className="w-full p-2 bg-gray-700 rounded-md text-white"
+                rows="3"
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* Weather Input */}
+      <div className="bg-gray-800 p-4 rounded-lg">
+        <button
+          onClick={() => toggleSection("weather")}
+          className="w-full flex justify-between items-center"
+        >
+          <div className="flex items-center space-x-2">
+            <Cloud size={20} />
+            <span className="text-lg font-semibold">Weather</span>
+          </div>
+          {expandedSection === "weather" ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+        </button>
+        <AnimatePresence>
+          {expandedSection === "weather" && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+              className="mt-4"
+            >
+              <input
+                type="text"
+                value={weather}
+                onChange={(e) => setWeather(e.target.value)}
+                placeholder="What's the weather like today?"
+                className="w-full p-2 bg-gray-700 rounded-md text-white"
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
       {/* Log Mood Button */}
       <button
         onClick={logMood}
@@ -216,8 +427,36 @@ export const MoodTracker = () => {
   )
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white font-sans">
-      <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen bg-gray-900 text-white font-sans relative">
+      {/* Particles Background */}
+      <Particles
+        id="tsparticles"
+        init={particlesInit}
+        options={{
+          background: {
+            color: {
+              value: "#1f2937", // Match the dark theme
+            },
+          },
+          particles: {
+            number: {
+              value: 50,
+            },
+            move: {
+              enable: true,
+              speed: 2,
+            },
+            opacity: {
+              value: 0.5,
+            },
+            size: {
+              value: 3,
+            },
+          },
+        }}
+      />
+
+      <div className="container mx-auto px-4 py-8 relative z-10">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold">Mood Tracker</h1>
           <button
