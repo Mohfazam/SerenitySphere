@@ -29,7 +29,7 @@ export const Team = () => {
       name: 'Syed Ahmed',
       role: 'QA Tester',
       bio: 'Dedicated QA Tester focused on identifying issues, ensuring reliability, and enhancing user experience.',
-      social: { linkedin: 'https://www.linkedin.com/in', twitter: 'https://x.com' },
+      social: { linkedin: 'https://www.linkedin.com/in/syed-ahmed-966729252', twitter: 'https://x.com/syedahmed137819' },
       icon: User,
     },
   ];
@@ -53,7 +53,7 @@ export const Team = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.2 }}
               viewport={{ once: true }}
-              className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col items-center text-center" // Added flex and text-center
+              className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col items-center text-center"
             >
               <div className="flex items-center justify-center">
                 <member.icon className="w-12 h-12 text-blue-600 dark:text-blue-400" />
@@ -61,11 +61,21 @@ export const Team = () => {
               <h3 className="mt-4 text-xl font-bold text-gray-900 dark:text-white">{member.name}</h3>
               <p className="mt-2 text-gray-500 dark:text-gray-400">{member.role}</p>
               <p className="mt-4 text-gray-500 dark:text-gray-400">{member.bio}</p>
-              <div className="mt-4 flex space-x-4 justify-center"> {/* Added justify-center */}
-                <a href={member.social.linkedin} className="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400">
+              <div className="mt-4 flex space-x-4 justify-center">
+                <a
+                  href={member.social.linkedin}
+                  target="_blank" // Opens link in a new tab
+                  rel="noopener noreferrer" // Security best practice
+                  className="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400"
+                >
                   <Linkedin className="w-6 h-6" />
                 </a>
-                <a href={member.social.twitter} className="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400">
+                <a
+                  href={member.social.twitter}
+                  target="_blank" // Opens link in a new tab
+                  rel="noopener noreferrer" // Security best practice
+                  className="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400"
+                >
                   <Twitter className="w-6 h-6" />
                 </a>
               </div>
