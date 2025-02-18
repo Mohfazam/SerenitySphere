@@ -1,7 +1,9 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Line, Bar, Pie, Radar } from "react-chartjs-2";
+import { Chart } from "chart.js/auto"; // Import Chart.js directly
 
 const InsightsTab = ({ moodEntries, darkMode }) => {
   const moodEmojis = [
@@ -11,6 +13,26 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
     { label: "Angry", color: "rgba(239, 68, 68, 0.7)" },
     { label: "Energetic", color: "rgba(139, 92, 246, 0.7)" },
   ];
+
+  // Refs to store chart instances
+  const moodHistoryChartRef = useRef(null);
+  const activityDistributionChartRef = useRef(null);
+  const sleepQualityChartRef = useRef(null);
+  const waterIntakeChartRef = useRef(null);
+  const exerciseChartRef = useRef(null);
+  const moodCorrelationChartRef = useRef(null);
+
+  // Destroy charts on unmount
+  useEffect(() => {
+    return () => {
+      if (moodHistoryChartRef.current) moodHistoryChartRef.current.destroy();
+      if (activityDistributionChartRef.current) activityDistributionChartRef.current.destroy();
+      if (sleepQualityChartRef.current) sleepQualityChartRef.current.destroy();
+      if (waterIntakeChartRef.current) waterIntakeChartRef.current.destroy();
+      if (exerciseChartRef.current) exerciseChartRef.current.destroy();
+      if (moodCorrelationChartRef.current) moodCorrelationChartRef.current.destroy();
+    };
+  }, []);
 
   const renderMoodHistory = () => {
     const data = {
@@ -51,7 +73,13 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
       },
     };
 
-    return <Line data={data} options={options} />;
+    return (
+      <Line
+        data={data}
+        options={options}
+        ref={(node) => (moodHistoryChartRef.current = node?.chartInstance)}
+      />
+    );
   };
 
   const renderActivityDistribution = () => {
@@ -96,7 +124,13 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
       },
     };
 
-    return <Pie data={data} options={options} />;
+    return (
+      <Pie
+        data={data}
+        options={options}
+        ref={(node) => (activityDistributionChartRef.current = node?.chartInstance)}
+      />
+    );
   };
 
   const renderSleepQualityChart = () => {
@@ -132,7 +166,13 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
       },
     };
 
-    return <Bar data={data} options={options} />;
+    return (
+      <Bar
+        data={data}
+        options={options}
+        ref={(node) => (sleepQualityChartRef.current = node?.chartInstance)}
+      />
+    );
   };
 
   const renderWaterIntakeChart = () => {
@@ -168,7 +208,13 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
       },
     };
 
-    return <Bar data={data} options={options} />;
+    return (
+      <Bar
+        data={data}
+        options={options}
+        ref={(node) => (waterIntakeChartRef.current = node?.chartInstance)}
+      />
+    );
   };
 
   const renderExerciseChart = () => {
@@ -204,7 +250,13 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
       },
     };
 
-    return <Bar data={data} options={options} />;
+    return (
+      <Bar
+        data={data}
+        options={options}
+        ref={(node) => (exerciseChartRef.current = node?.chartInstance)}
+      />
+    );
   };
 
   const renderMoodCorrelationChart = () => {
@@ -264,7 +316,13 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
       },
     };
 
-    return <Radar data={data} options={options} />;
+    return (
+      <Radar
+        data={data}
+        options={options}
+        ref={(node) => (moodCorrelationChartRef.current = node?.chartInstance)}
+      />
+    );
   };
 
   return (
