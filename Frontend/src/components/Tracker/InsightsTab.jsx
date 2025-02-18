@@ -1,6 +1,7 @@
-"use client"
-import { motion } from "framer-motion"
-import { Line, Bar, Pie, Radar } from "react-chartjs-2"
+"use client";
+
+import { motion } from "framer-motion";
+import { Line, Bar, Pie, Radar } from "react-chartjs-2";
 
 const InsightsTab = ({ moodEntries, darkMode }) => {
   const moodEmojis = [
@@ -9,7 +10,7 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
     { label: "Sad", color: "rgba(59, 130, 246, 0.7)" },
     { label: "Angry", color: "rgba(239, 68, 68, 0.7)" },
     { label: "Energetic", color: "rgba(139, 92, 246, 0.7)" },
-  ]
+  ];
 
   const renderMoodHistory = () => {
     const data = {
@@ -25,7 +26,7 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
           tension: 0.4,
         },
       ],
-    }
+    };
 
     const options = {
       responsive: true,
@@ -48,18 +49,18 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
           },
         },
       },
-    }
+    };
 
-    return <Line data={data} options={options} />
-  }
+    return <Line data={data} options={options} />;
+  };
 
   const renderActivityDistribution = () => {
     const activityCounts = moodEntries.reduce((acc, entry) => {
       entry.activities.forEach((activity) => {
-        acc[activity] = (acc[activity] || 0) + 1
-      })
-      return acc
-    }, {})
+        acc[activity] = (acc[activity] || 0) + 1;
+      });
+      return acc;
+    }, {});
 
     const data = {
       labels: Object.keys(activityCounts),
@@ -80,7 +81,7 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
           ],
         },
       ],
-    }
+    };
 
     const options = {
       responsive: true,
@@ -93,10 +94,10 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
           text: "Activity Distribution",
         },
       },
-    }
+    };
 
-    return <Pie data={data} options={options} />
-  }
+    return <Pie data={data} options={options} />;
+  };
 
   const renderSleepQualityChart = () => {
     const data = {
@@ -110,7 +111,7 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
           tension: 0.1,
         },
       ],
-    }
+    };
 
     const options = {
       responsive: true,
@@ -129,10 +130,10 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
           },
         },
       },
-    }
+    };
 
-    return <Bar data={data} options={options} />
-  }
+    return <Bar data={data} options={options} />;
+  };
 
   const renderWaterIntakeChart = () => {
     const data = {
@@ -146,7 +147,7 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
           borderWidth: 1,
         },
       ],
-    }
+    };
 
     const options = {
       responsive: true,
@@ -165,10 +166,10 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
           },
         },
       },
-    }
+    };
 
-    return <Bar data={data} options={options} />
-  }
+    return <Bar data={data} options={options} />;
+  };
 
   const renderExerciseChart = () => {
     const data = {
@@ -182,7 +183,7 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
           borderWidth: 1,
         },
       ],
-    }
+    };
 
     const options = {
       responsive: true,
@@ -201,10 +202,10 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
           },
         },
       },
-    }
+    };
 
-    return <Bar data={data} options={options} />
-  }
+    return <Bar data={data} options={options} />;
+  };
 
   const renderMoodCorrelationChart = () => {
     const moodScores = {
@@ -213,20 +214,20 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
       Neutral: 2,
       Sad: 1,
       Angry: 0,
-    }
+    };
 
     const averages = moodEntries.reduce(
       (acc, entry) => {
-        acc.mood += moodScores[entry.mood.label]
-        acc.sleep += entry.sleepHours
-        acc.water += entry.waterIntake
-        acc.exercise += entry.exerciseMinutes
-        return acc
+        acc.mood += moodScores[entry.mood.label];
+        acc.sleep += entry.sleepHours;
+        acc.water += entry.waterIntake;
+        acc.exercise += entry.exerciseMinutes;
+        return acc;
       },
       { mood: 0, sleep: 0, water: 0, exercise: 0 },
-    )
+    );
 
-    const count = moodEntries.length
+    const count = moodEntries.length;
     const data = {
       labels: ["Mood", "Sleep", "Water", "Exercise"],
       datasets: [
@@ -242,7 +243,7 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
           pointHoverBorderColor: "rgb(255, 99, 132)",
         },
       ],
-    }
+    };
 
     const options = {
       responsive: true,
@@ -261,10 +262,10 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
           suggestedMax: 5,
         },
       },
-    }
+    };
 
-    return <Radar data={data} options={options} />
-  }
+    return <Radar data={data} options={options} />;
+  };
 
   return (
     <motion.div
@@ -309,8 +310,7 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
         )}
       </div>
     </motion.div>
-  )
-}
+  );
+};
 
-export default InsightsTab
-
+export default InsightsTab;

@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { motion } from "framer-motion"
+import { useState } from "react";
+import { motion } from "framer-motion";
 import {
   Smile,
   Meh,
@@ -20,7 +20,7 @@ import {
   Activity,
   PlusCircle,
   X,
-} from "lucide-react"
+} from "lucide-react";
 
 const moodEmojis = [
   { emoji: <Smile size={32} />, label: "Happy", color: "bg-emerald-500", textColor: "text-emerald-500" },
@@ -28,7 +28,7 @@ const moodEmojis = [
   { emoji: <Frown size={32} />, label: "Sad", color: "bg-blue-500", textColor: "text-blue-500" },
   { emoji: <Angry size={32} />, label: "Angry", color: "bg-rose-500", textColor: "text-rose-500" },
   { emoji: <Zap size={32} />, label: "Energetic", color: "bg-violet-500", textColor: "text-violet-500" },
-]
+];
 
 const activities = [
   { icon: <HeartPulse size={20} />, label: "Exercise" },
@@ -41,21 +41,21 @@ const activities = [
   { icon: <Music size={20} />, label: "Listen to Music" },
   { icon: <Utensils size={20} />, label: "Cook" },
   { icon: <Activity size={20} />, label: "Work" },
-]
+];
 
 const MoodTrackerTab = ({ addMoodEntry, darkMode }) => {
-  const [currentMood, setCurrentMood] = useState(null)
-  const [notes, setNotes] = useState("")
-  const [selectedActivities, setSelectedActivities] = useState([])
-  const [sleepHours, setSleepHours] = useState("")
-  const [waterIntake, setWaterIntake] = useState("")
-  const [exerciseMinutes, setExerciseMinutes] = useState("")
-  const [gratitudeList, setGratitudeList] = useState([""])
-  const [goals, setGoals] = useState([""])
-  const [weather, setWeather] = useState("")
+  const [currentMood, setCurrentMood] = useState(null);
+  const [notes, setNotes] = useState("");
+  const [selectedActivities, setSelectedActivities] = useState([]);
+  const [sleepHours, setSleepHours] = useState("");
+  const [waterIntake, setWaterIntake] = useState("");
+  const [exerciseMinutes, setExerciseMinutes] = useState("");
+  const [gratitudeList, setGratitudeList] = useState([""]);
+  const [goals, setGoals] = useState([""]);
+  const [weather, setWeather] = useState("");
 
   const logMood = () => {
-    if (!currentMood) return
+    if (!currentMood) return;
 
     const newEntry = {
       date: new Date().toISOString(),
@@ -68,44 +68,44 @@ const MoodTrackerTab = ({ addMoodEntry, darkMode }) => {
       gratitudeList,
       goals,
       weather,
-    }
+    };
 
-    addMoodEntry(newEntry)
-    resetForm()
-  }
+    addMoodEntry(newEntry);
+    resetForm();
+  };
 
   const resetForm = () => {
-    setCurrentMood(null)
-    setNotes("")
-    setSelectedActivities([])
-    setSleepHours("")
-    setWaterIntake("")
-    setExerciseMinutes("")
-    setGratitudeList([""])
-    setGoals([""])
-    setWeather("")
-  }
+    setCurrentMood(null);
+    setNotes("");
+    setSelectedActivities([]);
+    setSleepHours("");
+    setWaterIntake("");
+    setExerciseMinutes("");
+    setGratitudeList([""]);
+    setGoals([""]);
+    setWeather("");
+  };
 
   const toggleActivity = (activity) => {
     setSelectedActivities((prev) =>
       prev.includes(activity) ? prev.filter((a) => a !== activity) : [...prev, activity],
-    )
-  }
+    );
+  };
 
   const addListItem = (setter, list) => {
-    setter([...list, ""])
-  }
+    setter([...list, ""]);
+  };
 
   const updateListItem = (setter, list, index, value) => {
-    const newList = [...list]
-    newList[index] = value
-    setter(newList)
-  }
+    const newList = [...list];
+    newList[index] = value;
+    setter(newList);
+  };
 
   const removeListItem = (setter, list, index) => {
-    const newList = list.filter((_, i) => i !== index)
-    setter(newList)
-  }
+    const newList = list.filter((_, i) => i !== index);
+    setter(newList);
+  };
 
   return (
     <motion.div
@@ -279,8 +279,7 @@ const MoodTrackerTab = ({ addMoodEntry, darkMode }) => {
         </div>
       </div>
     </motion.div>
-  )
-}
+  );
+};
 
-export default MoodTrackerTab
-
+export default MoodTrackerTab;

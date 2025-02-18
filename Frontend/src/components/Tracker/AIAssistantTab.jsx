@@ -1,37 +1,41 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { motion } from "framer-motion"
-import { Send } from "lucide-react"
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Line, Bar } from "react-chartjs-2";
 
 const AIAssistantTab = ({ moodEntries, darkMode }) => {
-  const [userInput, setUserInput] = useState("")
-  const [conversation, setConversation] = useState([])
+  const staticData = {
+    moodTrends: [4, 3, 2, 4, 3, 5, 4],
+    productivity: [8, 7, 6, 8, 9, 7, 8],
+    labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+  };
 
-  const simulateAIResponse = (input) => {
-    const responses = [
-      "Based on your mood patterns, try incorporating more outdoor activities into your routine.",
-      "Your sleep seems to have a strong correlation with your mood. Consider establishing a consistent sleep schedule.",
-      "Great job on maintaining regular exercise! It appears to have a positive impact on your overall well-being.",
-      "Your water intake has been consistent. Keep it up, as it contributes to better mood and energy levels.",
-      "I notice you often feel energetic after socializing. Consider planning more social activities to boost your mood.",
-      "Your gratitude practice is admirable. Focusing on positive aspects can significantly improve your mental state.",
-      "Have you considered trying meditation? It could help manage stress levels, especially on days you feel angry or sad.",
-    ]
+  const moodTrendsData = {
+    labels: staticData.labels,
+    datasets: [
+      {
+        label: "Mood Trend",
+        data: staticData.moodTrends,
+        borderColor: "rgb(75, 192, 192)",
+        backgroundColor: "rgba(75, 192, 192, 0.2)",
+        tension: 0.4,
+      },
+    ],
+  };
 
-    return responses[Math.floor(Math.random() * responses.length)]
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    if (!userInput.trim()) return
-
-    const newUserMessage = { type: "user", content: userInput }
-    const newAIMessage = { type: "ai", content: simulateAIResponse(userInput) }
-
-    setConversation([...conversation, newUserMessage, newAIMessage])
-    setUserInput("")
-  }
+  const productivityData = {
+    labels: staticData.labels,
+    datasets: [
+      {
+        label: "Productivity",
+        data: staticData.productivity,
+        backgroundColor: "rgba(255, 99, 132, 0.2)",
+        borderColor: "rgb(255, 99, 132)",
+        borderWidth: 1,
+      },
+    ],
+  };
 
   return (
     <motion.div
@@ -41,42 +45,20 @@ const AIAssistantTab = ({ moodEntries, darkMode }) => {
       transition={{ duration: 0.3 }}
     >
       <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
-        <h2 className="text-2xl font-semibold mb-4">AI Assistant</h2>
-        <div className="mb-4 h-96 overflow-y-auto bg-gray-100 dark:bg-gray-700 p-4 rounded-lg">
-          {conversation.map((message, index) => (
-            <div
-              key={index}
-              className={`mb-2 p-2 rounded-lg ${
-                message.type === "user" ? "bg-blue-100 dark:bg-blue-900 ml-auto" : "bg-gray-200 dark:bg-gray-600"
-              } max-w-3/4`}
-            >
-              <p
-                className={`text-sm ${message.type === "user" ? "text-blue-800 dark:text-blue-200" : "text-gray-800 dark:text-gray-200"}`}
-              >
-                {message.content}
-              </p>
-            </div>
-          ))}
+        <h2 className="text-2xl font-semibold mb-4">AI Assistant Insights</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg">
+            <h3 className="text-lg font-semibold mb-2">Weekly Mood Trends</h3>
+            <Line data={moodTrendsData} />
+          </div>
+          <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg">
+            <h3 className="text-lg font-semibold mb-2">Productivity Levels</h3>
+            <Bar data={productivityData} />
+          </div>
         </div>
-        <form onSubmit={handleSubmit} className="flex items-center">
-          <input
-            type="text"
-            value={userInput}
-            onChange={(e) => setUserInput(e.target.value)}
-            placeholder="Ask the AI assistant..."
-            className="flex-grow p-2 border border-gray-300 dark:border-gray-600 rounded-l-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
-          />
-          <button
-            type="submit"
-            className="p-2 bg-blue-500 text-white rounded-r-md hover:bg-blue-600 transition-colors duration-200"
-          >
-            <Send size={20} />
-          </button>
-        </form>
       </div>
     </motion.div>
-  )
-}
+  );
+};
 
-export default AIAssistantTab
-
+export default AIAssistantTab;

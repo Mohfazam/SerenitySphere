@@ -1,43 +1,43 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { Sun, Moon, Info } from "lucide-react"
-import Particles from "react-tsparticles"
-import { loadFull } from "tsparticles"
-import MoodTrackerTab from "./MoodTrackerTab"
-import InsightsTab from "./InsightsTab"
-import AIAssistantTab from "./AIAssistantTab"
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Sun, Moon, Info } from "lucide-react";
+import Particles from "react-tsparticles";
+import { loadFull } from "tsparticles";
+import MoodTrackerTab from "./MoodTrackerTab";
+import InsightsTab from "./InsightsTab";
+import AIAssistantTab from "./AIAssistantTab";
 
 export const MoodTracker = () => {
-  const [moodEntries, setMoodEntries] = useState([])
-  const [showInfo, setShowInfo] = useState(false)
-  const [darkMode, setDarkMode] = useState(false)
-  const [activeTab, setActiveTab] = useState("tracker")
+  const [moodEntries, setMoodEntries] = useState([]);
+  const [showInfo, setShowInfo] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
+  const [activeTab, setActiveTab] = useState("tracker");
 
   useEffect(() => {
-    const savedEntries = localStorage.getItem("moodEntries")
-    if (savedEntries) setMoodEntries(JSON.parse(savedEntries))
+    const savedEntries = localStorage.getItem("moodEntries");
+    if (savedEntries) setMoodEntries(JSON.parse(savedEntries));
 
-    const savedDarkMode = localStorage.getItem("darkMode")
-    if (savedDarkMode) setDarkMode(JSON.parse(savedDarkMode))
-  }, [])
-
-  useEffect(() => {
-    localStorage.setItem("moodEntries", JSON.stringify(moodEntries))
-  }, [moodEntries])
+    const savedDarkMode = localStorage.getItem("darkMode");
+    if (savedDarkMode) setDarkMode(JSON.parse(savedDarkMode));
+  }, []);
 
   useEffect(() => {
-    localStorage.setItem("darkMode", JSON.stringify(darkMode))
-  }, [darkMode])
+    localStorage.setItem("moodEntries", JSON.stringify(moodEntries));
+  }, [moodEntries]);
+
+  useEffect(() => {
+    localStorage.setItem("darkMode", JSON.stringify(darkMode));
+  }, [darkMode]);
 
   const particlesInit = async (engine) => {
-    await loadFull(engine)
-  }
+    await loadFull(engine);
+  };
 
   const addMoodEntry = (newEntry) => {
-    setMoodEntries([...moodEntries, newEntry])
-  }
+    setMoodEntries([...moodEntries, newEntry]);
+  };
 
   return (
     <div
@@ -172,8 +172,5 @@ export const MoodTracker = () => {
         </AnimatePresence>
       </div>
     </div>
-  )
-}
-
-
-
+  );
+};
