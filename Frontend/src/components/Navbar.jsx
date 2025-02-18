@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Brain, Menu, X } from 'lucide-react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 export const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -8,12 +9,14 @@ export const Navbar = () => {
   const navbarHeight = useTransform(scrollY, [0, 100], [80, 60]);
   const navbarOpacity = useTransform(scrollY, [0, 100], [1, 0.9]);
 
+  const navigate = useNavigate(); // Initialize useNavigate
+
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
   const handleNavigation = (path) => {
-    console.log(`Navigating to: ${path}`);
+    navigate(path); // Use navigate to change the route
     setIsMobileMenuOpen(false);
   };
 
@@ -48,17 +51,55 @@ export const Navbar = () => {
           {/* Desktop Links */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
-              {['Home', 'Work', 'Awards', 'Team', 'Prices', 'Contact'].map((item) => (
-                <motion.a
-                  key={item}
-                  href={`#${item.toLowerCase()}`}
-                  onClick={() => handleNavigation(`/${item.toLowerCase()}`)}
-                  className="relative px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 transition-colors duration-200 hover:text-blue-600 dark:hover:text-blue-400"
-                  whileHover={{ scale: 1.05 }}
-                >
-                  {item}
-                </motion.a>
-              ))}
+              {/* Home Button */}
+              <motion.a
+                href="/"
+                onClick={() => handleNavigation('/')}
+                className="relative px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 transition-colors duration-200 hover:text-blue-600 dark:hover:text-blue-400"
+                whileHover={{ scale: 1.05 }}
+              >
+                Home
+              </motion.a>
+
+              {/* MoodSphere Button */}
+              <motion.a
+                href="/tracker"
+                onClick={() => handleNavigation('/tracker')}
+                className="relative px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 transition-colors duration-200 hover:text-blue-600 dark:hover:text-blue-400"
+                whileHover={{ scale: 1.05 }}
+              >
+                MoodSphere
+              </motion.a>
+
+              {/* Journaling Button */}
+              <motion.a
+                href="/journaling"
+                onClick={() => handleNavigation('/journaling')}
+                className="relative px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 transition-colors duration-200 hover:text-blue-600 dark:hover:text-blue-400"
+                whileHover={{ scale: 1.05 }}
+              >
+                Journaling
+              </motion.a>
+
+              {/* Team Button */}
+              <motion.a
+                href="#team"
+                onClick={() => handleNavigation('/team')}
+                className="relative px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 transition-colors duration-200 hover:text-blue-600 dark:hover:text-blue-400"
+                whileHover={{ scale: 1.05 }}
+              >
+                Team
+              </motion.a>
+
+              {/* Contact Button */}
+              <motion.a
+                href="#contact"
+                onClick={() => handleNavigation('/contact')}
+                className="relative px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 transition-colors duration-200 hover:text-blue-600 dark:hover:text-blue-400"
+                whileHover={{ scale: 1.05 }}
+              >
+                Contact
+              </motion.a>
             </div>
           </div>
 
@@ -84,17 +125,55 @@ export const Navbar = () => {
             className="md:hidden mt-4"
           >
             <div className="flex flex-col space-y-2">
-              {['Home', 'Work', 'Awards', 'Team', 'Prices', 'Contact'].map((item) => (
-                <motion.a
-                  key={item}
-                  href={`#${item.toLowerCase()}`}
-                  onClick={() => handleNavigation(`/${item.toLowerCase()}`)}
-                  className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
-                  whileHover={{ scale: 1.05 }}
-                >
-                  {item}
-                </motion.a>
-              ))}
+              {/* Home Button for Mobile */}
+              <motion.a
+                href="/"
+                onClick={() => handleNavigation('/')}
+                className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+                whileHover={{ scale: 1.05 }}
+              >
+                Home
+              </motion.a>
+
+              {/* MoodSphere Button for Mobile */}
+              <motion.a
+                href="/tracker"
+                onClick={() => handleNavigation('/tracker')}
+                className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+                whileHover={{ scale: 1.05 }}
+              >
+                MoodSphere
+              </motion.a>
+
+              {/* Journaling Button for Mobile */}
+              <motion.a
+                href="/journaling"
+                onClick={() => handleNavigation('/journaling')}
+                className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+                whileHover={{ scale: 1.05 }}
+              >
+                Journaling
+              </motion.a>
+
+              {/* Team Button for Mobile */}
+              <motion.a
+                href="#team"
+                onClick={() => handleNavigation('/team')}
+                className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+                whileHover={{ scale: 1.05 }}
+              >
+                Team
+              </motion.a>
+
+              {/* Contact Button for Mobile */}
+              <motion.a
+                href="#contact"
+                onClick={() => handleNavigation('/contact')}
+                className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+                whileHover={{ scale: 1.05 }}
+              >
+                Contact
+              </motion.a>
             </div>
           </motion.div>
         )}
