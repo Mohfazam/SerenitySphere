@@ -152,9 +152,10 @@ export const MoodGarden = () => {
   };
 
   return (
-    <section className={`py-20 ${getBackgroundColor()} dark:from-gray-900 dark:to-gray-800`}>
+    <section className={`py-10 ${getBackgroundColor()} dark:from-gray-900 dark:to-gray-800`}>
       {/* Interactive Particles */}
-      <Particles
+    <div className= "absolute inset-0 z-0">
+    <Particles
         id="tsparticles"
         init={particlesInit}
         options={{
@@ -217,7 +218,7 @@ export const MoodGarden = () => {
           detectRetina: true,
         }}
       />
-
+    </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
         <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white mb-6">
           {gardenName}
