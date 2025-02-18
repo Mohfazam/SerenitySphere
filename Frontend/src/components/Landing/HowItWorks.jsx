@@ -17,7 +17,7 @@ export const HowItWorks = () => {
   };
 
   return (
-    <section id="how-it-works" className="relative py-20 bg-white dark:bg-gray-900 overflow-hidden">
+    <section id="how-it-works" className="relative py-20 bg-gray-900 overflow-hidden">
       {/* Parallax Background */}
       <div className="absolute inset-0 z-0">
         <Particles
@@ -26,25 +26,35 @@ export const HowItWorks = () => {
           options={{
             background: {
               color: {
-                value: "#1f2937", // Dark mode background
+                value: "#0f172a", // Darker background
               },
             },
             particles: {
               number: {
-                value: 50,
+                value: 80,
               },
               move: {
                 enable: true,
-                speed: 2,
+                speed: 3,
               },
               opacity: {
-                value: 0.5,
+                value: 0.7,
               },
               size: {
-                value: 3,
+                value: 4,
               },
               color: {
                 value: "#3b82f6", // Blue particles
+              },
+              shape: {
+                type: "circle",
+              },
+              links: {
+                enable: true,
+                distance: 150,
+                color: "#3b82f6",
+                opacity: 0.5,
+                width: 1,
               },
             },
           }}
@@ -52,17 +62,40 @@ export const HowItWorks = () => {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="lg:text-center">
-          <h2 className="text-base text-blue-600 font-semibold tracking-wide uppercase">How It Works</h2>
-          <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
+        {/* Heading Section */}
+        <div className="text-center">
+          <motion.h2
+            initial={{ opacity: 0, y: -20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-base text-blue-500 font-semibold tracking-wide uppercase"
+          >
+            How It Works
+          </motion.h2>
+          <motion.h1
+            initial={{ opacity: 0, y: -20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="mt-2 text-4xl font-extrabold text-white sm:text-5xl"
+          >
             Your Journey to Better Mental Health
-          </p>
-          <p className="mt-4 max-w-2xl text-xl text-gray-500 dark:text-gray-400 lg:mx-auto">
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: -20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            viewport={{ once: true }}
+            className="mt-4 max-w-2xl text-xl text-gray-400 mx-auto"
+          >
             Follow these simple steps to start your path towards improved well-being with SerenitySphere.
-          </p>
+          </motion.p>
         </div>
+
+        {/* Steps Section */}
         <div className="mt-20">
-          <dl className="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {steps.map((step, index) => (
               <motion.div
                 key={index}
@@ -70,20 +103,16 @@ export const HowItWorks = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.2 }}
                 viewport={{ once: true }}
-                className="flex items-start p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 hover:scale-105 transform-gpu"
+                className="group p-8 bg-gray-800 rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-105 transform-gpu"
               >
-                <div className="flex-shrink-0">
-                  <div className="flex items-center justify-center h-12 w-12 rounded-md bg-gradient-to-br from-blue-500 to-purple-500 text-white">
-                    <step.icon className="h-6 w-6" />
-                  </div>
+                <div className="flex items-center justify-center w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 text-white">
+                  <step.icon className="h-8 w-8" />
                 </div>
-                <div className="ml-4">
-                  <h4 className="text-lg font-medium text-gray-900 dark:text-white">{step.title}</h4>
-                  <p className="mt-2 text-base text-gray-500 dark:text-gray-400">{step.description}</p>
-                </div>
+                <h3 className="text-2xl font-bold text-white text-center mb-4">{step.title}</h3>
+                <p className="text-lg text-gray-400 text-center">{step.description}</p>
               </motion.div>
             ))}
-          </dl>
+          </div>
         </div>
       </div>
     </section>
