@@ -1,6 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Download, Smile, Zap, Award } from 'lucide-react';
+import Particles from 'react-tsparticles';
+import { loadFull } from 'tsparticles';
 
 export const HowItWorks = () => {
   const steps = [
@@ -10,9 +12,46 @@ export const HowItWorks = () => {
     { icon: Award, title: 'Achieve Your Goals', description: 'Set and accomplish mental health goals with the support of our AI-powered system.' },
   ];
 
+  const particlesInit = async (engine) => {
+    await loadFull(engine);
+  };
+
   return (
-    <section id="how-it-works" className="py-20 bg-white dark:bg-gray-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="how-it-works" className="relative py-20 bg-white dark:bg-gray-900 overflow-hidden">
+      {/* Parallax Background */}
+      <div className="absolute inset-0 z-0">
+        <Particles
+          id="tsparticles"
+          init={particlesInit}
+          options={{
+            background: {
+              color: {
+                value: "#1f2937", // Dark mode background
+              },
+            },
+            particles: {
+              number: {
+                value: 50,
+              },
+              move: {
+                enable: true,
+                speed: 2,
+              },
+              opacity: {
+                value: 0.5,
+              },
+              size: {
+                value: 3,
+              },
+              color: {
+                value: "#3b82f6", // Blue particles
+              },
+            },
+          }}
+        />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="lg:text-center">
           <h2 className="text-base text-blue-600 font-semibold tracking-wide uppercase">How It Works</h2>
           <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
@@ -31,10 +70,10 @@ export const HowItWorks = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.2 }}
                 viewport={{ once: true }}
-                className="flex items-start p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+                className="flex items-start p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 hover:scale-105 transform-gpu"
               >
                 <div className="flex-shrink-0">
-                  <div className="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white">
+                  <div className="flex items-center justify-center h-12 w-12 rounded-md bg-gradient-to-br from-blue-500 to-purple-500 text-white">
                     <step.icon className="h-6 w-6" />
                   </div>
                 </div>
