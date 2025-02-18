@@ -284,7 +284,7 @@ export const MoodGarden = () => {
             <div className="w-full h-48">
               <Bar data={barChartData} />
             </div>
-          </div>
+          </div> 
 
           {/* Timeline Card */}
           <div className="p-6 bg-gradient-to-br from-green-50 to-green-100 dark:from-gray-700 dark:to-gray-800 rounded-lg shadow-md">
