@@ -6,7 +6,7 @@ import {
   Route,
 } from "react-router-dom";
 import { Landing } from "./components/Landing/Landing";
-import {MoodTracker} from './components/Tracker/MoodTracker'
+import {MoodTracker} from './components/Tracker/MoodTracker';
 import {Journaling} from './components/Journaling/Journaling'
 
 const router = createBrowserRouter([
