@@ -1,17 +1,22 @@
 import React, { useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Brain, Menu, X } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 export const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { scrollY } = useScroll();
   const navbarHeight = useTransform(scrollY, [0, 100], [80, 60]);
   const navbarOpacity = useTransform(scrollY, [0, 100], [1, 0.9]);
-  const navigate = useNavigate();
+
+  const navigate = useNavigate(); // Initialize useNavigate
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
 
   const handleNavigation = (path) => {
-    navigate(path);
+    navigate(path); // Use navigate to change the route
     setIsMobileMenuOpen(false);
   };
 
@@ -24,9 +29,10 @@ export const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center">
-            <motion.button
-              onClick={() => handleNavigation('/')}
+            <motion.a
+              href="#"
               className="flex-shrink-0 flex items-center"
+              onClick={() => handleNavigation('/')}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
             >
@@ -39,7 +45,7 @@ export const Navbar = () => {
               <span className="ml-2 text-xl font-bold text-gray-900 dark:text-white">
                 SerenitySphere
               </span>
-            </motion.button>
+            </motion.a>
           </div>
 
           {/* Desktop Links */}
@@ -47,32 +53,32 @@ export const Navbar = () => {
             <div className="ml-10 flex items-baseline space-x-4">
               {/* Home Button */}
               <motion.a
-                href="#home"
-                onClick={() => handleNavigation('/home')}
+                href="/"
+                onClick={() => handleNavigation('/')}
                 className="relative px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 transition-colors duration-200 hover:text-blue-600 dark:hover:text-blue-400"
                 whileHover={{ scale: 1.05 }}
               >
                 Home
               </motion.a>
 
-              {/* Work Button */}
+              {/* MoodSphere Button */}
               <motion.a
-                href="#work"
-                onClick={() => handleNavigation('/work')}
+                href="/tracker"
+                onClick={() => handleNavigation('/tracker')}
                 className="relative px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 transition-colors duration-200 hover:text-blue-600 dark:hover:text-blue-400"
                 whileHover={{ scale: 1.05 }}
               >
-                Work
+                MoodSphere
               </motion.a>
 
-              {/* Awards Button */}
+              {/* Journaling Button */}
               <motion.a
-                href="#awards"
-                onClick={() => handleNavigation('/awards')}
+                href="/journaling"
+                onClick={() => handleNavigation('/journaling')}
                 className="relative px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 transition-colors duration-200 hover:text-blue-600 dark:hover:text-blue-400"
                 whileHover={{ scale: 1.05 }}
               >
-                Awards
+                Journaling
               </motion.a>
 
               {/* Team Button */}
@@ -83,16 +89,6 @@ export const Navbar = () => {
                 whileHover={{ scale: 1.05 }}
               >
                 Team
-              </motion.a>
-
-              {/* Prices Button */}
-              <motion.a
-                href="#prices"
-                onClick={() => handleNavigation('/prices')}
-                className="relative px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 transition-colors duration-200 hover:text-blue-600 dark:hover:text-blue-400"
-                whileHover={{ scale: 1.05 }}
-              >
-                Prices
               </motion.a>
 
               {/* Contact Button */}
@@ -111,7 +107,7 @@ export const Navbar = () => {
           <motion.button
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            onClick={toggleMobileMenu}
             className="p-2 rounded-md text-gray-700 dark:text-gray-300 transition-colors duration-200 md:hidden"
             aria-label="Toggle Mobile Menu"
           >
@@ -129,37 +125,37 @@ export const Navbar = () => {
             className="md:hidden mt-4"
           >
             <div className="flex flex-col space-y-2">
-              {/* Home Button */}
+              {/* Home Button for Mobile */}
               <motion.a
-                href="#home"
-                onClick={() => handleNavigation('/home')}
+                href="/"
+                onClick={() => handleNavigation('/')}
                 className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
                 whileHover={{ scale: 1.05 }}
               >
                 Home
               </motion.a>
 
-              {/* Work Button */}
+              {/* MoodSphere Button for Mobile */}
               <motion.a
-                href="#work"
-                onClick={() => handleNavigation('/work')}
+                href="/tracker"
+                onClick={() => handleNavigation('/tracker')}
                 className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
                 whileHover={{ scale: 1.05 }}
               >
-                Work
+                MoodSphere
               </motion.a>
 
-              {/* Awards Button */}
+              {/* Journaling Button for Mobile */}
               <motion.a
-                href="#awards"
-                onClick={() => handleNavigation('/awards')}
+                href="/journaling"
+                onClick={() => handleNavigation('/journaling')}
                 className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
                 whileHover={{ scale: 1.05 }}
               >
-                Awards
+                Journaling
               </motion.a>
 
-              {/* Team Button */}
+              {/* Team Button for Mobile */}
               <motion.a
                 href="#team"
                 onClick={() => handleNavigation('/team')}
@@ -169,17 +165,7 @@ export const Navbar = () => {
                 Team
               </motion.a>
 
-              {/* Prices Button */}
-              <motion.a
-                href="#prices"
-                onClick={() => handleNavigation('/prices')}
-                className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
-                whileHover={{ scale: 1.05 }}
-              >
-                Prices
-              </motion.a>
-
-              {/* Contact Button */}
+              {/* Contact Button for Mobile */}
               <motion.a
                 href="#contact"
                 onClick={() => handleNavigation('/contact')}
