@@ -339,28 +339,28 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
             No mood entries yet. Start logging your moods to see insights!
           </p>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg">
+          <div className="grid grid-cols-4 md:grid-cols-3 gap-4">
+            <div className="bg-white dark:bg-gray-700 p-4 rounded-lg">
               <h3 className="text-lg font-semibold mb-2">Mood History</h3>
               {renderMoodHistory()}
             </div>
-            <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg">
+            <div className="bg-white dark:bg-gray-700 p-4 rounded-lg">
               <h3 className="text-lg font-semibold mb-2">Activity Distribution</h3>
               {renderActivityDistribution()}
             </div>
-            <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg">
+            <div className="bg-white dark:bg-gray-700 p-4 rounded-lg">
               <h3 className="text-lg font-semibold mb-2">Sleep Quality</h3>
               {renderSleepQualityChart()}
             </div>
-            <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg">
+            <div className="bg-white dark:bg-gray-700 p-4 rounded-lg">
               <h3 className="text-lg font-semibold mb-2">Water Intake</h3>
               {renderWaterIntakeChart()}
             </div>
-            <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg">
+            <div className="bg-white dark:bg-gray-700 p-4 rounded-lg">
               <h3 className="text-lg font-semibold mb-2">Exercise Duration</h3>
               {renderExerciseChart()}
             </div>
-            <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg">
+            <div className="bg-white dark:bg-gray-700 p-4 rounded-lg">
               <h3 className="text-lg font-semibold mb-2">Mood Correlation</h3>
               {renderMoodCorrelationChart()}
             </div>
