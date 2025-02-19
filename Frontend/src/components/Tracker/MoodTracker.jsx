@@ -8,6 +8,7 @@ import { loadFull } from "tsparticles";
 import MoodTrackerTab from "./MoodTrackerTab";
 import InsightsTab from "./InsightsTab";
 import AIAssistantTab from "./AIAssistantTab";
+import HabitTrackerTab from "./HabitTrackerTab"; // Import the new component
 
 export const MoodTracker = () => {
   const [moodEntries, setMoodEntries] = useState([]);
@@ -152,7 +153,7 @@ export const MoodTracker = () => {
         </AnimatePresence>
 
         <div className="flex justify-center space-x-4 mb-6">
-          {["tracker", "insights", "ai"].map((tab) => (
+          {["tracker", "insights", "ai", "habits"].map((tab) => (
             <motion.button
               key={tab}
               onClick={() => setActiveTab(tab)}
@@ -169,6 +170,7 @@ export const MoodTracker = () => {
           {activeTab === "tracker" && <MoodTrackerTab key="tracker" addMoodEntry={addMoodEntry} darkMode={darkMode} />}
           {activeTab === "insights" && <InsightsTab key="insights" moodEntries={moodEntries} darkMode={darkMode} />}
           {activeTab === "ai" && <AIAssistantTab key="ai" moodEntries={moodEntries} darkMode={darkMode} />}
+          {activeTab === "habits" && <HabitTrackerTab key="habits" />}
         </AnimatePresence>
       </div>
     </div>
