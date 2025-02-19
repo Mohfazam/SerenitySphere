@@ -1,22 +1,17 @@
 import React, { useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Brain, Menu, X } from 'lucide-react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 
 export const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { scrollY } = useScroll();
   const navbarHeight = useTransform(scrollY, [0, 100], [80, 60]);
   const navbarOpacity = useTransform(scrollY, [0, 100], [1, 0.9]);
-
-  const navigate = useNavigate(); // Initialize useNavigate
-
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
+  const navigate = useNavigate();
 
   const handleNavigation = (path) => {
-    navigate(path); // Use navigate to change the route
+    navigate(path);
     setIsMobileMenuOpen(false);
   };
 
@@ -29,10 +24,9 @@ export const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center">
-            <motion.a
-              href="#"
-              className="flex-shrink-0 flex items-center"
+            <motion.button
               onClick={() => handleNavigation('/')}
+              className="flex-shrink-0 flex items-center"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
             >
@@ -45,61 +39,51 @@ export const Navbar = () => {
               <span className="ml-2 text-xl font-bold text-gray-900 dark:text-white">
                 SerenitySphere
               </span>
-            </motion.a>
+            </motion.button>
           </div>
 
           {/* Desktop Links */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
-              {/* Home Button */}
-              <motion.a
-                href="/"
+              <motion.button
                 onClick={() => handleNavigation('/')}
                 className="relative px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 transition-colors duration-200 hover:text-blue-600 dark:hover:text-blue-400"
                 whileHover={{ scale: 1.05 }}
               >
                 Home
-              </motion.a>
+              </motion.button>
 
-              {/* MoodSphere Button */}
-              <motion.a
-                href="/tracker"
-                onClick={() => navigate('/tracker')}
+              <motion.button
+                onClick={() => handleNavigation('/tracker')}
                 className="relative px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 transition-colors duration-200 hover:text-blue-600 dark:hover:text-blue-400"
                 whileHover={{ scale: 1.05 }}
               >
                 MoodSphere
-              </motion.a>
+              </motion.button>
 
-              {/* Journaling Button */}
-              <motion.a
-                href="/journaling"
+              <motion.button
                 onClick={() => handleNavigation('/journaling')}
                 className="relative px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 transition-colors duration-200 hover:text-blue-600 dark:hover:text-blue-400"
                 whileHover={{ scale: 1.05 }}
               >
                 Journaling
-              </motion.a>
+              </motion.button>
 
-              {/* Team Button */}
-              <motion.a
-                href="#team"
+              <motion.button
                 onClick={() => handleNavigation('/team')}
                 className="relative px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 transition-colors duration-200 hover:text-blue-600 dark:hover:text-blue-400"
                 whileHover={{ scale: 1.05 }}
               >
                 Team
-              </motion.a>
+              </motion.button>
 
-              {/* Contact Button */}
-              <motion.a
-                href="#contact"
+              <motion.button
                 onClick={() => handleNavigation('/contact')}
                 className="relative px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 transition-colors duration-200 hover:text-blue-600 dark:hover:text-blue-400"
                 whileHover={{ scale: 1.05 }}
               >
                 Contact
-              </motion.a>
+              </motion.button>
             </div>
           </div>
 
@@ -107,7 +91,7 @@ export const Navbar = () => {
           <motion.button
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
-            onClick={toggleMobileMenu}
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="p-2 rounded-md text-gray-700 dark:text-gray-300 transition-colors duration-200 md:hidden"
             aria-label="Toggle Mobile Menu"
           >
@@ -125,55 +109,45 @@ export const Navbar = () => {
             className="md:hidden mt-4"
           >
             <div className="flex flex-col space-y-2">
-              {/* Home Button for Mobile */}
-              <motion.a
-                href="/"
+              <motion.button
                 onClick={() => handleNavigation('/')}
-                className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+                className="block px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
                 whileHover={{ scale: 1.05 }}
               >
                 Home
-              </motion.a>
+              </motion.button>
 
-              {/* MoodSphere Button for Mobile */}
-              <motion.a
-                href="/tracker"
+              <motion.button
                 onClick={() => handleNavigation('/tracker')}
-                className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+                className="block px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
                 whileHover={{ scale: 1.05 }}
               >
                 MoodSphere
-              </motion.a>
+              </motion.button>
 
-              {/* Journaling Button for Mobile */}
-              <motion.a
-                href="/journaling"
+              <motion.button
                 onClick={() => handleNavigation('/journaling')}
-                className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+                className="block px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
                 whileHover={{ scale: 1.05 }}
               >
                 Journaling
-              </motion.a>
+              </motion.button>
 
-              {/* Team Button for Mobile */}
-              <motion.a
-                href="#team"
+              <motion.button
                 onClick={() => handleNavigation('/team')}
-                className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+                className="block px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
                 whileHover={{ scale: 1.05 }}
               >
                 Team
-              </motion.a>
+              </motion.button>
 
-              {/* Contact Button for Mobile */}
-              <motion.a
-                href="#contact"
+              <motion.button
                 onClick={() => handleNavigation('/contact')}
-                className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+                className="block px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
                 whileHover={{ scale: 1.05 }}
               >
                 Contact
-              </motion.a>
+              </motion.button>
             </div>
           </motion.div>
         )}
