@@ -8,7 +8,7 @@ import { loadFull } from "tsparticles";
 import MoodTrackerTab from "./MoodTrackerTab";
 import InsightsTab from "./InsightsTab";
 import AIAssistantTab from "./AIAssistantTab";
-import HabitTrackerTab from "./HabitTrackerTab"; // Import the new component
+import HabitTrackerTab from "./HabitTrackerTab"; // Import the enhanced component
 
 export const MoodTracker = () => {
   const [moodEntries, setMoodEntries] = useState([]);
@@ -170,7 +170,7 @@ export const MoodTracker = () => {
           {activeTab === "tracker" && <MoodTrackerTab key="tracker" addMoodEntry={addMoodEntry} darkMode={darkMode} />}
           {activeTab === "insights" && <InsightsTab key="insights" moodEntries={moodEntries} darkMode={darkMode} />}
           {activeTab === "ai" && <AIAssistantTab key="ai" moodEntries={moodEntries} darkMode={darkMode} />}
-          {activeTab === "habits" && <HabitTrackerTab key="habits" />}
+          {activeTab === "habits" && <HabitTrackerTab key="habits" darkMode={darkMode} />}
         </AnimatePresence>
       </div>
     </div>
