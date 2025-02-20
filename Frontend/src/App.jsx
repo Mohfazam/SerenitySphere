@@ -8,6 +8,7 @@ import {
 import { Landing } from "./components/Landing/Landing";
 import {MoodTracker} from './components/Tracker/MoodTracker';
 import {Journaling} from './components/Journaling/Journaling'
+import MentalHealthTest from './components/DNA/MentalHealthTest'
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
   {
     path: "/Journaling",
     element: <Journaling />,
+  },
+  {
+    path: "/MentalHealthTest",
+    element: <MentalHealthTest />,
   },
   
 ]);
