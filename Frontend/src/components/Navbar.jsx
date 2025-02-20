@@ -1,47 +1,67 @@
-import React, { useState } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { Brain, Menu, X } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+"use client"
+
+import React, { useState, useEffect } from "react"
+import { motion, useScroll, useTransform } from "framer-motion"
+import { Brain, Menu, X, Moon, Sun } from "lucide-react"
+import { useNavigate } from "react-router-dom"
 
 export const Navbar = () => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { scrollY } = useScroll();
-  const navbarHeight = useTransform(scrollY, [0, 100], [80, 60]);
-  const navbarOpacity = useTransform(scrollY, [0, 100], [1, 0.9]);
-  const navigate = useNavigate();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [theme, setTheme] = useState("light") // Default theme is light
+  const { scrollY } = useScroll()
+  const navbarHeight = useTransform(scrollY, [0, 100], [80, 60])
+  const navbarOpacity = useTransform(scrollY, [0, 100], [1, 0.9])
+  const navigate = useNavigate()
+
+  // Load theme from localStorage on mount
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme") || "light"
+    setTheme(savedTheme)
+    document.documentElement.classList.toggle("dark", savedTheme === "dark")
+  }, [])
+
+  // Update localStorage and HTML class when theme changes
+  useEffect(() => {
+    localStorage.setItem("theme", theme)
+    document.documentElement.classList.toggle("dark", theme === "dark")
+  }, [theme])
+
+  const toggleTheme = () => {
+    setTheme((prevTheme) => (prevTheme === "dark" ? "light" : "dark"))
+  }
 
   const handleNavigation = (path) => {
-    if (path === '/team') {
+    if (path === "/team") {
       // First navigate to home if not already there
-      if (window.location.pathname !== '/') {
-        navigate('/');
+      if (window.location.pathname !== "/") {
+        navigate("/")
         // Wait for navigation to complete
         setTimeout(() => {
-          const teamSection = document.getElementById('team-section');
+          const teamSection = document.getElementById("team-section")
           if (teamSection) {
-            teamSection.scrollIntoView({ behavior: 'smooth' });
+            teamSection.scrollIntoView({ behavior: "smooth" })
           }
-        }, 100);
+        }, 100)
       } else {
         // If already on home page, just scroll
-        const teamSection = document.getElementById('team-section');
+        const teamSection = document.getElementById("team-section")
         if (teamSection) {
-          teamSection.scrollIntoView({ behavior: 'smooth' });
+          teamSection.scrollIntoView({ behavior: "smooth" })
         }
       }
-    } else if (path === '/') {
+    } else if (path === "/") {
       // Handle Home button click
-      if (window.location.pathname !== '/') {
-        navigate('/');
+      if (window.location.pathname !== "/") {
+        navigate("/")
       } else {
         // If already on home page, scroll to top smoothly
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo({ top: 0, behavior: "smooth" })
       }
     } else {
-      navigate(path);
+      navigate(path)
     }
-    setIsMobileMenuOpen(false);
-  };
+    setIsMobileMenuOpen(false)
+  }
 
   return (
     <motion.nav
@@ -53,7 +73,7 @@ export const Navbar = () => {
           {/* Logo */}
           <div className="flex items-center">
             <motion.button
-              onClick={() => handleNavigation('/')}
+              onClick={() => handleNavigation("/")}
               className="flex-shrink-0 flex items-center"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
@@ -74,7 +94,7 @@ export const Navbar = () => {
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
               <motion.button
-                onClick={() => handleNavigation('/')}
+                onClick={() => handleNavigation("/")}
                 className="relative px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 transition-colors duration-200 hover:text-blue-600 dark:hover:text-blue-400"
                 whileHover={{ scale: 1.05 }}
               >
@@ -82,7 +102,7 @@ export const Navbar = () => {
               </motion.button>
 
               <motion.button
-                onClick={() => handleNavigation('/tracker')}
+                onClick={() => handleNavigation("/tracker")}
                 className="relative px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 transition-colors duration-200 hover:text-blue-600 dark:hover:text-blue-400"
                 whileHover={{ scale: 1.05 }}
               >
@@ -90,7 +110,7 @@ export const Navbar = () => {
               </motion.button>
 
               <motion.button
-                onClick={() => handleNavigation('/journaling')}
+                onClick={() => handleNavigation("/journaling")}
                 className="relative px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 transition-colors duration-200 hover:text-blue-600 dark:hover:text-blue-400"
                 whileHover={{ scale: 1.05 }}
               >
@@ -98,7 +118,15 @@ export const Navbar = () => {
               </motion.button>
 
               <motion.button
-                onClick={() => handleNavigation('/team')}
+                onClick={() => handleNavigation("/mood-music")}
+                className="relative px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 transition-colors duration-200 hover:text-blue-600 dark:hover:text-blue-400"
+                whileHover={{ scale: 1.05 }}
+              >
+                Mood Music
+              </motion.button>
+
+              <motion.button
+                onClick={() => handleNavigation("/team")}
                 className="relative px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 transition-colors duration-200 hover:text-blue-600 dark:hover:text-blue-400"
                 whileHover={{ scale: 1.05 }}
               >
@@ -106,13 +134,27 @@ export const Navbar = () => {
               </motion.button>
 
               <motion.button
-                onClick={() => handleNavigation('/contact')}
+                onClick={() => handleNavigation("/contact")}
                 className="relative px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 transition-colors duration-200 hover:text-blue-600 dark:hover:text-blue-400"
                 whileHover={{ scale: 1.05 }}
               >
                 Contact
               </motion.button>
             </div>
+          </div>
+
+          {/* Theme Toggle */}
+          <div className="hidden md:block">
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              {theme === "dark" ? (
+                <Sun className="h-5 w-5 text-gray-500" />
+              ) : (
+                <Moon className="h-5 w-5 text-gray-500" />
+              )}
+            </button>
           </div>
 
           {/* Mobile Menu Toggle */}
@@ -138,7 +180,7 @@ export const Navbar = () => {
           >
             <div className="flex flex-col space-y-2">
               <motion.button
-                onClick={() => handleNavigation('/')}
+                onClick={() => handleNavigation("/")}
                 className="block px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
                 whileHover={{ scale: 1.05 }}
               >
@@ -146,7 +188,7 @@ export const Navbar = () => {
               </motion.button>
 
               <motion.button
-                onClick={() => handleNavigation('/tracker')}
+                onClick={() => handleNavigation("/tracker")}
                 className="block px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
                 whileHover={{ scale: 1.05 }}
               >
@@ -154,7 +196,7 @@ export const Navbar = () => {
               </motion.button>
 
               <motion.button
-                onClick={() => handleNavigation('/journaling')}
+                onClick={() => handleNavigation("/journaling")}
                 className="block px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
                 whileHover={{ scale: 1.05 }}
               >
@@ -162,7 +204,15 @@ export const Navbar = () => {
               </motion.button>
 
               <motion.button
-                onClick={() => handleNavigation('/team')}
+                onClick={() => handleNavigation("/mood-music")}
+                className="block px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+                whileHover={{ scale: 1.05 }}
+              >
+                Mood Music
+              </motion.button>
+
+              <motion.button
+                onClick={() => handleNavigation("/team")}
                 className="block px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
                 whileHover={{ scale: 1.05 }}
               >
@@ -170,16 +220,23 @@ export const Navbar = () => {
               </motion.button>
 
               <motion.button
-                onClick={() => handleNavigation('/contact')}
+                onClick={() => handleNavigation("/contact")}
                 className="block px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
                 whileHover={{ scale: 1.05 }}
               >
                 Contact
               </motion.button>
+
+              <button
+                onClick={toggleTheme}
+                className="block px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+              >
+                {theme === "dark" ? "Light Mode" : "Dark Mode"}
+              </button>
             </div>
           </motion.div>
         )}
       </div>
     </motion.nav>
-  );
-};
+  )
+}

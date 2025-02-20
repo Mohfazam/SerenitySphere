@@ -3,11 +3,11 @@
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Save, BookOpen, Trash, Share, X } from "lucide-react"
-import { Button } from "@/components/ui/button.jsx"
+import { Button } from "../ui/button.jsx";
 import { RichTextEditor } from "./RichTextEditor.jsx"
 import { VoiceInput } from "./VoiceInput.jsx"
 import { MoodSelector } from "./MoodSelector.jsx"
-import { useToast } from "@/components/ui/use-toast.jsx"
+import { useToast } from "../ui/use-toast.jsx";
 
 const AUTOSAVE_DELAY = 3000 // 3 seconds
 
