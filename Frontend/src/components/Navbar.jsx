@@ -11,7 +11,35 @@ export const Navbar = () => {
   const navigate = useNavigate();
 
   const handleNavigation = (path) => {
-    navigate(path);
+    if (path === '/team') {
+      // First navigate to home if not already there
+      if (window.location.pathname !== '/') {
+        navigate('/');
+        // Wait for navigation to complete
+        setTimeout(() => {
+          const teamSection = document.getElementById('team-section');
+          if (teamSection) {
+            teamSection.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 100);
+      } else {
+        // If already on home page, just scroll
+        const teamSection = document.getElementById('team-section');
+        if (teamSection) {
+          teamSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    } else if (path === '/') {
+      // Handle Home button click
+      if (window.location.pathname !== '/') {
+        navigate('/');
+      } else {
+        // If already on home page, scroll to top smoothly
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    } else {
+      navigate(path);
+    }
     setIsMobileMenuOpen(false);
   };
 

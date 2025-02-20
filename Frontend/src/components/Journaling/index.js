@@ -3,11 +3,11 @@
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Save, BookOpen, Trash, Share, X } from "lucide-react"
-import { Button } from "@/components/ui/button.jsx"
-import { RichTextEditor } from "./RichTextEditor.jsx"
-import { VoiceInput } from "./VoiceInput.jsx"
-import { MoodSelector } from "./MoodSelector.jsx"
-import { useToast } from "@/components/ui/use-toast.jsx"
+import { RichTextEditor } from "./RichTextEditor"
+import { VoiceInput } from "./VoiceInput"
+import { MoodSelector } from "./MoodSelector"
+import { toast, ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 const AUTOSAVE_DELAY = 3000 // 3 seconds
 
@@ -15,15 +15,8 @@ export function Journaling() {
   const [entry, setEntry] = useState("")
   const [entries, setEntries] = useState([])
   const [selectedMood, setSelectedMood] = useState("Neutral")
-  const [searchQuery, setSearchQuery] = useState("")
   const [showPreview, setShowPreview] = useState(false)
   const [previewEntry, setPreviewEntry] = useState(null)
-  const { toast, showToast } = useToast()
-
-  // Force dark mode on mount
-  useEffect(() => {
-    document.documentElement.classList.add("dark")
-  }, [])
 
   // Load entries from localStorage on mount
   useEffect(() => {
@@ -46,12 +39,15 @@ export function Journaling() {
             updatedAt: new Date().toISOString(),
           }),
         )
-        showToast("Draft saved automatically", { duration: 2000 })
+        toast.info("Draft saved automatically", {
+          autoClose: 2000,
+          position: "bottom-right",
+        })
       }
     }, AUTOSAVE_DELAY)
 
     return () => clearTimeout(timeoutId)
-  }, [entry, selectedMood, showToast])
+  }, [entry, selectedMood])
 
   const saveEntry = () => {
     if (entry.trim()) {
@@ -72,7 +68,9 @@ export function Journaling() {
       setSelectedMood("Neutral")
       localStorage.removeItem("journal-draft")
 
-      showToast("Journal entry saved successfully")
+      toast.success("Journal entry saved successfully", {
+        position: "bottom-right",
+      })
     }
   }
 
@@ -85,7 +83,9 @@ export function Journaling() {
     setEntries(updatedEntries)
     localStorage.setItem("journal-entries", JSON.stringify(updatedEntries))
 
-    showToast("Sharing status updated")
+    toast.info("Sharing status updated", {
+      position: "bottom-right",
+    })
   }
 
   const deleteEntry = (entryId) => {
@@ -93,17 +93,19 @@ export function Journaling() {
     setEntries(updatedEntries)
     localStorage.setItem("journal-entries", JSON.stringify(updatedEntries))
 
-    showToast("Entry deleted successfully", { variant: "destructive" })
+    toast.error("Entry deleted", {
+      position: "bottom-right",
+    })
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-white p-6">
-      <h2 className="text-2xl font-bold mb-4">Journaling</h2>
+    <div className="p-6 bg-gradient-to-br from-green-50 to-blue-50 rounded-lg shadow-md">
+      <h2 className="text-2xl font-bold text-gray-900 mb-4">Journaling</h2>
 
       <div className="mb-4">
         <div className="flex items-center gap-2 mb-2">
           <VoiceInput onTranscript={handleVoiceInput} />
-          <span className="text-sm text-gray-400">Click the microphone to start voice input</span>
+          <span className="text-sm text-gray-500">Click the microphone to start voice input</span>
         </div>
 
         <RichTextEditor content={entry} onChange={setEntry} />
@@ -115,37 +117,39 @@ export function Journaling() {
       </div>
 
       <div className="flex gap-2">
-        <Button onClick={saveEntry} className="flex items-center gap-2">
+        <button
+          onClick={saveEntry}
+          className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 
+            transition-colors duration-200 flex items-center gap-2"
+        >
           <Save className="h-4 w-4" /> Save Entry
-        </Button>
+        </button>
       </div>
 
       <div className="mt-6">
-        <h3 className="text-lg font-semibold mb-2">Recent Entries</h3>
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">Recent Entries</h3>
         <div className="space-y-2">
           {entries.slice(-3).map((entry) => (
-            <div key={entry.id} className="p-4 bg-gray-800 rounded-lg shadow-sm">
+            <div key={entry.id} className="p-4 bg-white rounded-lg shadow-sm">
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
-                  <BookOpen className="h-4 w-4 text-gray-400" />
-                  <span className="text-sm text-gray-400">{new Date(entry.createdAt).toLocaleString()}</span>
+                  <BookOpen className="h-4 w-4" />
+                  <span className="text-sm text-gray-500">{new Date(entry.createdAt).toLocaleString()}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Button
-                    variant="ghost"
-                    size="sm"
+                  <button
                     onClick={() => shareEntry(entry.id)}
-                    className={entry.shared ? "text-blue-500" : "text-gray-400"}
+                    className={`p-2 rounded hover:bg-gray-100 ${entry.shared ? "text-blue-500" : ""}`}
                   >
                     <Share className="h-4 w-4" />
-                  </Button>
-                  <Button variant="ghost" size="sm" onClick={() => deleteEntry(entry.id)} className="text-gray-400">
+                  </button>
+                  <button onClick={() => deleteEntry(entry.id)} className="p-2 rounded hover:bg-gray-100">
                     <Trash className="h-4 w-4" />
-                  </Button>
+                  </button>
                 </div>
               </div>
               <div
-                className="prose prose-invert max-w-none text-sm"
+                className="prose max-w-none text-sm"
                 dangerouslySetInnerHTML={{ __html: entry.content.slice(0, 200) + "..." }}
               />
             </div>
@@ -166,18 +170,18 @@ export function Journaling() {
               initial={{ y: 50, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: 50, opacity: 0 }}
-              className="bg-gray-800 p-6 rounded-lg shadow-lg max-w-lg w-full"
+              className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-xl font-bold">Entry Preview</h3>
-                <Button variant="ghost" size="sm" onClick={() => setShowPreview(false)} className="text-gray-400">
+                <button onClick={() => setShowPreview(false)} className="p-2 rounded hover:bg-gray-100">
                   <X className="h-4 w-4" />
-                </Button>
+                </button>
               </div>
-              <div className="prose prose-invert max-w-none">
+              <div className="prose max-w-none">
                 <div dangerouslySetInnerHTML={{ __html: previewEntry.content }} />
-                <div className="mt-4 text-sm text-gray-400">
+                <div className="mt-4 text-sm text-gray-500">
                   <p>Mood: {previewEntry.mood}</p>
                   <p>Created: {new Date(previewEntry.createdAt).toLocaleString()}</p>
                   <p>Last modified: {new Date(previewEntry.updatedAt).toLocaleString()}</p>
@@ -187,6 +191,9 @@ export function Journaling() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <ToastContainer />
     </div>
   )
 }
+

@@ -40,7 +40,9 @@ export const Landing = () => {
       <Pricing />
       <BlogHighlights />
       <MoodGarden />
-      <Team />
+      <section id="team-section">
+        <Team />
+      </section>
       <Footer />
     </div>
   );

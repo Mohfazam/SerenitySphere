@@ -8,6 +8,7 @@ import {
 import { Landing } from "./components/Landing/Landing";
 import {MoodTracker} from './components/Tracker/MoodTracker';
 import {Journaling} from './components/Journaling/Journaling'
+import { Team } from "./components/Landing/Team"; 
 
 const router = createBrowserRouter([
   {
@@ -19,10 +20,9 @@ const router = createBrowserRouter([
     element: <MoodTracker />,
   },
   {
-    path: "/Journaling",
+    path: "/journaling",
     element: <Journaling />,
   },
-  
 ]);
 
 function App() {
