@@ -1,15 +1,16 @@
+// MentalHealthTest.jsx
 "use client"
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { ChevronLeft } from "lucide-react"
+import { ChevronLeft, Sparkles } from "lucide-react"
 import AssessmentForm from "./AssessmentForm"
 import MentalHealthProfile from "./MentalHealthProfile"
 import PersonalizedRoadmap from "./PersonalizedRoadmap"
 import ProgressTracker from "./ProgressTracker"
 
 const MentalHealthTest = () => {
-  const [step, setStep] = useState("assessment") // 'assessment', 'profile', 'roadmap'
+  const [step, setStep] = useState("assessment")
   const [responses, setResponses] = useState({})
   const [scores, setScores] = useState(null)
 
@@ -22,15 +23,11 @@ const MentalHealthTest = () => {
       emotional: 0,
     }
 
-    // Calculate scores for each domain based on responses
     Object.entries(responses).forEach(([questionId, response]) => {
       const question = questions.find((q) => q.id === Number.parseInt(questionId))
-      if (question) {
-        domainScores[question.domain] += response
-      }
+      if (question) domainScores[question.domain] += response
     })
 
-    // Normalize scores to be out of 10
     Object.keys(domainScores).forEach((domain) => {
       const questionsInDomain = questions.filter((q) => q.domain === domain).length
       domainScores[domain] = Math.round((domainScores[domain] / (questionsInDomain * 5)) * 10)
@@ -41,8 +38,7 @@ const MentalHealthTest = () => {
 
   const handleAssessmentComplete = (responses) => {
     setResponses(responses)
-    const calculatedScores = calculateScores(responses)
-    setScores(calculatedScores)
+    setScores(calculateScores(responses))
     setStep("profile")
   }
 
@@ -51,18 +47,32 @@ const MentalHealthTest = () => {
     if (step === "roadmap") setStep("profile")
   }
 
-  const handleNext = () => {
-    if (step === "profile") setStep("roadmap")
-  }
-
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-3xl mx-auto">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Mental Health DNA Test</h1>
-          <p className="text-gray-600 dark:text-gray-300">
-            Discover your mental health profile and get personalized recommendations
-          </p>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-gray-900 dark:to-gray-900 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto">
+        <div className="text-center mb-8 space-y-4">
+          <motion.div 
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            className="inline-block"
+          >
+            <Sparkles className="w-12 h-12 text-yellow-400 mx-auto mb-4" />
+          </motion.div>
+          <motion.h1 
+            className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            Mental Wellness DNA
+          </motion.h1>
+          <motion.p 
+            className="text-lg text-gray-600 dark:text-gray-300"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+          >
+            Your personalized mental health blueprint
+          </motion.p>
         </div>
 
         <ProgressTracker currentStep={step} />
@@ -70,11 +80,11 @@ const MentalHealthTest = () => {
         {step !== "assessment" && (
           <motion.button
             onClick={handleBack}
-            className="mb-6 flex items-center text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+            className="mb-6 flex items-center text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white group"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <ChevronLeft className="w-5 h-5 mr-1" />
+            <ChevronLeft className="w-5 h-5 mr-1 transition-transform group-hover:-translate-x-1" />
             Back
           </motion.button>
         )}
@@ -83,9 +93,10 @@ const MentalHealthTest = () => {
           {step === "assessment" && (
             <motion.div
               key="assessment"
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -50 }}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ type: "spring", stiffness: 300 }}
             >
               <AssessmentForm onComplete={handleAssessmentComplete} />
             </motion.div>
@@ -98,16 +109,16 @@ const MentalHealthTest = () => {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -50 }}
             >
-              <MentalHealthProfile scores={scores} onNext={handleNext} />
+              <MentalHealthProfile scores={scores} onNext={() => setStep("roadmap")} />
             </motion.div>
           )}
 
           {step === "roadmap" && scores && (
             <motion.div
               key="roadmap"
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -50 }}
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 50 }}
             >
               <PersonalizedRoadmap scores={scores} />
             </motion.div>
@@ -197,4 +208,3 @@ export const questions = [
 ]
 
 export default MentalHealthTest
-
