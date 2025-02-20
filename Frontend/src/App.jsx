@@ -8,7 +8,7 @@ import {
 import { Landing } from "./components/Landing/Landing";
 import {MoodTracker} from './components/Tracker/MoodTracker';
 import {Journaling} from './components/Journaling/Journaling'
-import MentalHealthDNA from './components/DNA/MentalHealthDNA'
+import MentalHealthTest from './components/DNA/MentalHealthTest'
 
 const router = createBrowserRouter([
   {
@@ -24,8 +24,8 @@ const router = createBrowserRouter([
     element: <Journaling />,
   },
   {
-    path: "/MentalHealthDNA",
-    element: <MentalHealthDNA />,
+    path: "/DNA",
+    element: <MentalHealthTest />,
   },
   
 ]);
