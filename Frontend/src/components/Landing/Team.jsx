@@ -26,10 +26,10 @@ export const Team = () => {
       icon: User,
     },
     {
-      name: 'Syed Ahmed',
+      name: 'Madiyah Numa',
       role: 'QA Tester',
       bio: 'Dedicated QA Tester focused on identifying issues, ensuring reliability, and enhancing user experience.',
-      social: { linkedin: 'https://www.linkedin.com/in/syed-ahmed-966729252', twitter: 'https://x.com/syedahmed137819' },
+      social: { linkedin: 'https://www.linkedin.com/in/madiyah-numa-2903aa2a6/', twitter: 'https://x.com/mnuma0_0' },
       icon: User,
     },
   ];
