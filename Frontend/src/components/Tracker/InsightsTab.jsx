@@ -6,6 +6,12 @@ import { Line, Bar, Pie, Radar } from "react-chartjs-2";
 import { Chart } from "chart.js/auto"; // Import Chart.js directly
 
 const InsightsTab = ({ moodEntries, darkMode }) => {
+
+  const baseOptions = {
+    color: 'white', // Global text color
+    borderColor: 'rgba(255, 255, 255, 0.1)', // Grid line color
+  };
+
   const moodEmojis = [
     { label: "Happy", color: "rgba(16, 185, 129, 0.7)" },
     { label: "Neutral", color: "rgba(245, 158, 11, 0.7)" },
@@ -51,6 +57,7 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
     };
 
     const options = {
+      ...baseOptions,
       responsive: true,
       scales: {
         y: {
@@ -118,18 +125,19 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
     };
 
     const options = {
+      ...baseOptions,
       responsive: true,
       plugins: {
         legend: {
           position: "right",
           labels: {
-            color: 'white', // Set legend text color to white
+            color: 'white', 
           },
         },
         title: {
           display: true,
           text: "Activity Distribution",
-          color: 'white', // Set title text color to white
+          color: 'white', 
         },
       },
     };
@@ -158,6 +166,7 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
     };
 
     const options = {
+      ...baseOptions,
       responsive: true,
       plugins: {
         title: {
@@ -210,6 +219,7 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
     };
 
     const options = {
+      ...baseOptions,
       responsive: true,
       plugins: {
         title: {
@@ -262,6 +272,7 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
     };
 
     const options = {
+      ...baseOptions,
       responsive: true,
       plugins: {
         title: {
@@ -321,6 +332,7 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
 
     const count = moodEntries.length;
     const data = {
+      // ...baseOptions,
       labels: ["Mood", "Sleep", "Water", "Exercise"],
       datasets: [
         {
@@ -338,6 +350,7 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
     };
 
     const options = {
+      ...baseOptions,
       responsive: true,
       plugins: {
         title: {
