@@ -9,7 +9,6 @@ import { Landing } from "./components/Landing/Landing";
 import {MoodTracker} from './components/Tracker/MoodTracker';
 import {Journaling} from './components/Journaling/Journaling'
 import { Team } from "./components/Landing/Team"; 
-import MoodMusicPage from "./components/mood-music/MoodMusicPage"; // Correct path to MoodMusicPage
 
 const router = createBrowserRouter([
   {
