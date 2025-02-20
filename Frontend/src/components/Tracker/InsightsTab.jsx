@@ -57,7 +57,13 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
           beginAtZero: true,
           max: moodEmojis.length - 1,
           ticks: {
+            color: 'white', // Set y-axis text color to white
             callback: (value) => moodEmojis[value]?.label,
+          },
+        },
+        x: {
+          ticks: {
+            color: 'white', // Set x-axis text color to white
           },
         },
       },
@@ -116,10 +122,14 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
       plugins: {
         legend: {
           position: "right",
+          labels: {
+            color: 'white', // Set legend text color to white
+          },
         },
         title: {
           display: true,
           text: "Activity Distribution",
+          color: 'white', // Set title text color to white
         },
       },
     };
@@ -153,6 +163,7 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
         title: {
           display: true,
           text: "Sleep Quality Over Time",
+          color: 'white', // Set title text color to white
         },
       },
       scales: {
@@ -161,6 +172,15 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
           title: {
             display: true,
             text: "Hours of Sleep",
+            color: 'white', // Set y-axis title text color to white
+          },
+          ticks: {
+            color: 'white', // Set y-axis text color to white
+          },
+        },
+        x: {
+          ticks: {
+            color: 'white', // Set x-axis text color to white
           },
         },
       },
@@ -195,6 +215,7 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
         title: {
           display: true,
           text: "Daily Water Intake",
+          color: 'white', // Set title text color to white
         },
       },
       scales: {
@@ -203,6 +224,15 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
           title: {
             display: true,
             text: "Liters",
+            color: 'white', // Set y-axis title text color to white
+          },
+          ticks: {
+            color: 'white', // Set y-axis text color to white
+          },
+        },
+        x: {
+          ticks: {
+            color: 'white', // Set x-axis text color to white
           },
         },
       },
@@ -237,6 +267,7 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
         title: {
           display: true,
           text: "Daily Exercise Duration",
+          color: 'white', // Set title text color to white
         },
       },
       scales: {
@@ -245,6 +276,15 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
           title: {
             display: true,
             text: "Minutes",
+            color: 'white', // Set y-axis title text color to white
+          },
+          ticks: {
+            color: 'white', // Set y-axis text color to white
+          },
+        },
+        x: {
+          ticks: {
+            color: 'white', // Set x-axis text color to white
           },
         },
       },
@@ -303,6 +343,7 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
         title: {
           display: true,
           text: "Mood Correlation with Habits",
+          color: 'white', // Set title text color to white
         },
       },
       scales: {
@@ -312,6 +353,9 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
           },
           suggestedMin: 0,
           suggestedMax: 5,
+          ticks: {
+            color: 'white', // Set radar chart text color to white
+          },
         },
       },
     };
@@ -333,35 +377,35 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
       transition={{ duration: 0.3 }}
     >
       <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
-        <h2 className="text-2xl font-semibold mb-4">Mood Insights</h2>
+        <h2 className="text-2xl font-semibold mb-4 text-white">Mood Insights</h2>
         {moodEntries.length === 0 ? (
-          <p className="text-gray-600 dark:text-gray-400">
+          <p className="text-white dark:text-gray-400">
             No mood entries yet. Start logging your moods to see insights!
           </p>
         ) : (
           <div className="grid grid-cols-4 md:grid-cols-3 gap-4">
             <div className="bg-white dark:bg-gray-700 p-4 rounded-lg">
-              <h3 className="text-lg font-semibold mb-2">Mood History</h3>
+              <h3 className="text-lg font-semibold mb-2 text-white">Mood History</h3>
               {renderMoodHistory()}
             </div>
             <div className="bg-white dark:bg-gray-700 p-4 rounded-lg">
-              <h3 className="text-lg font-semibold mb-2">Activity Distribution</h3>
+              <h3 className="text-lg font-semibold mb-2 text-white">Activity Distribution</h3>
               {renderActivityDistribution()}
             </div>
             <div className="bg-white dark:bg-gray-700 p-4 rounded-lg">
-              <h3 className="text-lg font-semibold mb-2">Sleep Quality</h3>
+              <h3 className="text-lg font-semibold mb-2 text-white">Sleep Quality</h3>
               {renderSleepQualityChart()}
             </div>
             <div className="bg-white dark:bg-gray-700 p-4 rounded-lg">
-              <h3 className="text-lg font-semibold mb-2">Water Intake</h3>
+              <h3 className="text-lg font-semibold mb-2 text-white">Water Intake</h3>
               {renderWaterIntakeChart()}
             </div>
             <div className="bg-white dark:bg-gray-700 p-4 rounded-lg">
-              <h3 className="text-lg font-semibold mb-2">Exercise Duration</h3>
+              <h3 className="text-lg font-semibold mb-2 text-white">Exercise Duration</h3>
               {renderExerciseChart()}
             </div>
             <div className="bg-white dark:bg-gray-700 p-4 rounded-lg">
-              <h3 className="text-lg font-semibold mb-2">Mood Correlation</h3>
+              <h3 className="text-lg font-semibold mb-2 text-white">Mood Correlation</h3>
               {renderMoodCorrelationChart()}
             </div>
           </div>
