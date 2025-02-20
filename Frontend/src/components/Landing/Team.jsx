@@ -28,7 +28,7 @@ export const Team = () => {
     {
       name: 'Madiyah Numa',
       role: 'QA Tester',
-      bio: 'QA tester ensuring high-quality digital experiences through testing and problem-solving. Keen interest in UI/UX, graphic design, web development and blending creativity with technical skills.',
+      bio: 'QA tester ensuring quality digital experiences. Passionate about UI/UX, graphic design, and web development, combining creativity with technical skills.',
       social: { linkedin: 'https://www.linkedin.com/in/madiyah-numa-2903aa2a6/', twitter: 'https://x.com/mnuma0_0' },
       icon: User,
     },
