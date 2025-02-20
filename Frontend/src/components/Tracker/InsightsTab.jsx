@@ -3,13 +3,13 @@
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Line, Bar, Pie, Radar } from "react-chartjs-2";
-import { Chart } from "chart.js/auto"; // Import Chart.js directly
+import { Chart } from "chart.js/auto"; 
 
 const InsightsTab = ({ moodEntries, darkMode }) => {
 
   const baseOptions = {
-    color: 'white', // Global text color
-    borderColor: 'rgba(255, 255, 255, 0.1)', // Grid line color
+    color: 'white', 
+    borderColor: 'rgba(255, 255, 255, 0.1)',
   };
 
   const moodEmojis = [
