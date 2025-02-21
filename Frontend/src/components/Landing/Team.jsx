@@ -52,45 +52,52 @@ export const Team = () => {
   };
 
   return (
-    <section className="relative min-h-screen bg-gray-900">
-      <Particles
-        id="tsparticles"
-        init={particlesInit}
-        options={{
-          particles: {
-            number: { value: 80, density: { enable: true, value_area: 800 } },
-            color: { value: "#ffffff" },
-            opacity: { value: 0.1 },
-            size: { value: 2 },
-            move: {
-              enable: true,
-              speed: 0.5,
-              direction: "none",
-              random: true,
-              straight: false,
-              outModes: { default: "out" }
+    <div className="relative w-full min-h-screen bg-gray-900">
+      <div className="absolute inset-0 w-full h-full">
+        <Particles
+          id="tsparticles"
+          init={particlesInit}
+          options={{
+            fullScreen: {
+              enable: false,
+              zIndex: 0
             },
-            links: {
-              enable: true,
-              distance: 150,
-              color: "#ffffff",
-              opacity: 0.05,
-              width: 1
+            particles: {
+              number: { value: 80, density: { enable: true, value_area: 800 } },
+              color: { value: "#ffffff" },
+              opacity: { value: 0.1 },
+              size: { value: 2 },
+              move: {
+                enable: true,
+                speed: 0.5,
+                direction: "none",
+                random: true,
+                straight: false,
+                outModes: { default: "out" }
+              },
+              links: {
+                enable: true,
+                distance: 150,
+                color: "#ffffff",
+                opacity: 0.05,
+                width: 1
+              },
             },
-          },
-          interactivity: {
-            events: {
-              onHover: { enable: true, mode: "grab" },
-              onClick: { enable: true, mode: "push" }
-            },
-            modes: {
-              grab: { distance: 140, links: { opacity: 0.2 } }
+            interactivity: {
+              events: {
+                onHover: { enable: true, mode: "grab" },
+                onClick: { enable: true, mode: "push" }
+              },
+              modes: {
+                grab: { distance: 140, links: { opacity: 0.2 } }
+              }
             }
-          }
-        }}
-      />
+          }}
+          className="w-full h-full"
+        />
+      </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 py-20 sm:px-6 lg:px-8">
+      <div className="relative z-10 container mx-auto px-4 py-20">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -164,6 +171,8 @@ export const Team = () => {
           ))}
         </div>
       </div>
-    </section>
+    </div>
   );
 };
+
+export default Team;
