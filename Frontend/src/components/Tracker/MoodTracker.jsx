@@ -2,11 +2,12 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Info } from "lucide-react";
+import { Info, Brain, SmilePlus } from "lucide-react";
 import MoodTrackerTab from "./MoodTrackerTab";
 import InsightsTab from "./InsightsTab";
 import AIAssistantTab from "./AIAssistantTab";
 import HabitTrackerTab from "./HabitTrackerTab"; // Import the enhanced component
+import { Navbar } from "../Navbar";
 
 export const MoodTracker = () => {
   const [moodEntries, setMoodEntries] = useState([]);
@@ -28,22 +29,14 @@ export const MoodTracker = () => {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">
+      <Navbar title="MoodSphere" icon={SmilePlus} />
       <div className="container mx-auto px-4 py-8">
         {/* Header Section */}
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
-            MoodSphere
+          
           </h1>
           <div className="flex space-x-4">
-            {/* Info Button */}
-            <motion.button
-              onClick={() => setShowInfo(!showInfo)}
-              className="p-2 rounded-full bg-blue-500 text-white"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              <Info size={24} />
-            </motion.button>
           </div>
         </div>
 

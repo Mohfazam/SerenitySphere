@@ -1,16 +1,21 @@
 import React, { useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Brain, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-export const Navbar = () => {
+interface NavProps {
+  title: string;
+  icon: React.ElementType;
+}
+
+export const Navbar = ({ title, icon: Icon }: NavProps) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { scrollY } = useScroll();
   const navbarHeight = useTransform(scrollY, [0, 100], [80, 60]);
   const navbarOpacity = useTransform(scrollY, [0, 100], [1, 0.9]);
   const navigate = useNavigate();
 
-  const handleNavigation = (path) => {
+  const handleNavigation = (path: string) => {
     navigate(path);
     setIsMobileMenuOpen(false);
   };
@@ -22,7 +27,7 @@ export const Navbar = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
+          {/* Logo Section */}
           <div className="flex items-center">
             <motion.button
               onClick={() => handleNavigation('/')}
@@ -34,15 +39,15 @@ export const Navbar = () => {
                 whileHover={{ rotate: 360 }}
                 transition={{ duration: 1 }}
               >
-                <Brain className="h-8 w-8 text-blue-600 dark:text-blue-400" />
+                <Icon className="h-8 w-8 text-blue-600 dark:text-blue-400" />
               </motion.div>
               <span className="ml-2 text-xl font-bold text-gray-900 dark:text-white">
-                SerenitySphere
+                {title}
               </span>
             </motion.button>
           </div>
 
-          {/* Desktop Links */}
+          {/* Desktop Navigation */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
               <motion.button
