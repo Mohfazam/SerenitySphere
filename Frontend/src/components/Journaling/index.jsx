@@ -103,70 +103,62 @@ export function Journaling() {
   }
 
   return (
-    <div className="min-h-screen w-full flex flex-col bg-gray-900">
-      <div className="flex-1 flex flex-col bg-gradient-to-br from-gray-900 to-gray-800 p-6 md:p-8">
-        <h2 className="text-2xl font-bold text-gray-100 mb-4">Journaling</h2>
+    <div className="p-6 bg-gradient-to-br from-gray-900 to-gray-800 rounded-lg shadow-xl">
+      <h2 className="text-2xl font-bold text-gray-100 mb-4">Journaling</h2>
 
-        <div className="mb-4">
-          <div className="flex items-center gap-2 mb-2">
-            <VoiceInput onTranscript={handleVoiceInput} />
-            <span className="text-sm text-gray-400">Click the microphone to start voice input</span>
-          </div>
-
-          <RichTextEditor content={entry} onChange={setEntry} />
+      <div className="mb-4">
+        <div className="flex items-center gap-2 mb-2">
+          <VoiceInput onTranscript={handleVoiceInput} />
+          <span className="text-sm text-gray-400">Click the microphone to start voice input</span>
         </div>
 
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-300 mb-2">How are you feeling?</label>
-          <MoodSelector selected={selectedMood} onSelect={setSelectedMood} />
-        </div>
+        <RichTextEditor content={entry} onChange={setEntry} />
+      </div>
 
-        <div className="flex gap-2">
-          <button
-            onClick={saveEntry}
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 
-              transition-colors duration-200 flex items-center gap-2"
-          >
-            <Save className="h-4 w-4" /> Save Entry
-          </button>
-        </div>
+      <div className="mb-4">
+        <label className="block text-sm font-medium text-gray-300 mb-2">How are you feeling?</label>
+        <MoodSelector selected={selectedMood} onSelect={setSelectedMood} />
+      </div>
 
-        <div className="mt-6 flex-1">
-          <h3 className="text-lg font-semibold text-gray-100 mb-2">Recent Entries</h3>
-          <div className="space-y-2">
-            {entries.length > 0 ? (
-              entries.slice(-3).map((entry) => (
-                <div key={entry.id} className="p-4 bg-gray-800 rounded-lg shadow-md border border-gray-700">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center gap-2">
-                      <BookOpen className="h-4 w-4 text-gray-400" />
-                      <span className="text-sm text-gray-400">{new Date(entry.createdAt).toLocaleString()}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <button
-                        onClick={() => shareEntry(entry.id)}
-                        className={`p-2 rounded hover:bg-gray-700 
-                          ${entry.shared ? "text-blue-400" : "text-gray-400"}`}
-                      >
-                        <Share className="h-4 w-4" />
-                      </button>
-                      <button onClick={() => deleteEntry(entry.id)} className="p-2 rounded hover:bg-gray-700 text-gray-400">
-                        <Trash className="h-4 w-4" />
-                      </button>
-                    </div>
-                  </div>
-                  <div
-                    className="prose prose-invert max-w-none text-sm text-gray-300"
-                    dangerouslySetInnerHTML={{ __html: entry.content.slice(0, 200) + "..." }}
-                  />
+      <div className="flex gap-2">
+        <button
+          onClick={saveEntry}
+          className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 
+            transition-colors duration-200 flex items-center gap-2"
+        >
+          <Save className="h-4 w-4" /> Save Entry
+        </button>
+      </div>
+
+      <div className="mt-6">
+        <h3 className="text-lg font-semibold text-gray-100 mb-2">Recent Entries</h3>
+        <div className="space-y-2">
+          {entries.slice(-3).map((entry) => (
+            <div key={entry.id} className="p-4 bg-gray-800 rounded-lg shadow-md border border-gray-700">
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-2">
+                  <BookOpen className="h-4 w-4 text-gray-400" />
+                  <span className="text-sm text-gray-400">{new Date(entry.createdAt).toLocaleString()}</span>
                 </div>
-              ))
-            ) : (
-              <div className="p-4 bg-gray-800 bg-opacity-50 rounded-lg border border-gray-700 text-gray-400 text-center">
-                No entries yet. Start journaling to see your entries here.
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => shareEntry(entry.id)}
+                    className={`p-2 rounded hover:bg-gray-700 
+                      ${entry.shared ? "text-blue-400" : "text-gray-400"}`}
+                  >
+                    <Share className="h-4 w-4" />
+                  </button>
+                  <button onClick={() => deleteEntry(entry.id)} className="p-2 rounded hover:bg-gray-700 text-gray-400">
+                    <Trash className="h-4 w-4" />
+                  </button>
+                </div>
               </div>
-            )}
-          </div>
+              <div
+                className="prose prose-invert max-w-none text-sm text-gray-300"
+                dangerouslySetInnerHTML={{ __html: entry.content.slice(0, 200) + "..." }}
+              />
+            </div>
+          ))}
         </div>
       </div>
 
@@ -209,3 +201,4 @@ export function Journaling() {
     </div>
   )
 }
+
