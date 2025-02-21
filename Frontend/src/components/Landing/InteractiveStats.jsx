@@ -107,6 +107,7 @@ export const InteractiveStats = () => {
 
   const chartOptions = {
     responsive: true,
+    maintainAspectRatio: true,
     plugins: {
       legend: {
         position: 'top',
@@ -160,51 +161,65 @@ export const InteractiveStats = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-violet-900 relative overflow-hidden">
-      <Particles
-        id="tsparticles"
-        init={particlesInit}
-        options={{
-          background: {
-            opacity: 0,
-          },
-          particles: {
-            number: {
-              value: 50,
-              density: {
+    <div className="w-full min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-violet-900 relative">
+      <div className="absolute inset-0 w-full h-full">
+        <Particles
+          id="tsparticles"
+          init={particlesInit}
+          options={{
+            fullScreen: {
+              enable: false,
+              zIndex: 0
+            },
+            background: {
+              opacity: 0,
+            },
+            particles: {
+              number: {
+                value: 50,
+                density: {
+                  enable: true,
+                  value_area: 800,
+                },
+              },
+              color: {
+                value: "#ffffff",
+              },
+              shape: {
+                type: "circle",
+              },
+              opacity: {
+                value: 0.5,
+                random: true,
+              },
+              size: {
+                value: 3,
+                random: true,
+              },
+              move: {
                 enable: true,
-                value_area: 800,
+                speed: 1,
+                direction: "none",
+                random: true,
+                straight: false,
+                outModes: {
+                  default: "out",
+                },
               },
             },
-            color: {
-              value: "#ffffff",
-            },
-            shape: {
-              type: "circle",
-            },
-            opacity: {
-              value: 0.5,
-              random: true,
-            },
-            size: {
-              value: 3,
-              random: true,
-            },
-            move: {
-              enable: true,
-              speed: 1,
-              direction: "none",
-              random: true,
-              straight: false,
-              outModes: {
-                default: "out",
-              },
-            },
-          },
-        }}
-      />
+          }}
+          style={{
+            width: '100%',
+            height: '100%',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            zIndex: 0
+          }}
+        />
+      </div>
 
-      <div className="relative z-10 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 w-full py-12 px-4 sm:px-6 lg:px-8">
         <motion.h1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -223,7 +238,7 @@ export const InteractiveStats = () => {
                   variants={chartContainerVariants}
                   initial="hidden"
                   animate="visible"
-                  className="bg-white/10 backdrop-blur-lg rounded-xl p-6 hover:bg-white/15 transition-all duration-300"
+                  className="bg-white/10 backdrop-blur-lg rounded-xl p-6 hover:bg-white/15 transition-all duration-300 h-full"
                   whileHover={{ scale: 1.02 }}
                   onClick={() => setSelectedChart('mood')}
                 >
@@ -231,7 +246,9 @@ export const InteractiveStats = () => {
                     <Brain className="w-6 h-6 text-purple-400 mr-2" />
                     <h3 className="text-xl font-semibold text-white">Mood Trends</h3>
                   </div>
-                  <Line data={moodData} options={chartOptions} />
+                  <div className="h-64">
+                    <Line data={moodData} options={{...chartOptions, maintainAspectRatio: false}} />
+                  </div>
                 </motion.div>
 
                 <motion.div
@@ -239,7 +256,7 @@ export const InteractiveStats = () => {
                   variants={chartContainerVariants}
                   initial="hidden"
                   animate="visible"
-                  className="bg-white/10 backdrop-blur-lg rounded-xl p-6 hover:bg-white/15 transition-all duration-300"
+                  className="bg-white/10 backdrop-blur-lg rounded-xl p-6 hover:bg-white/15 transition-all duration-300 h-full"
                   whileHover={{ scale: 1.02 }}
                   onClick={() => setSelectedChart('engagement')}
                 >
@@ -247,7 +264,9 @@ export const InteractiveStats = () => {
                     <Activity className="w-6 h-6 text-blue-400 mr-2" />
                     <h3 className="text-xl font-semibold text-white">User Engagement</h3>
                   </div>
-                  <Bar data={engagementData} options={chartOptions} />
+                  <div className="h-64">
+                    <Bar data={engagementData} options={{...chartOptions, maintainAspectRatio: false}} />
+                  </div>
                 </motion.div>
 
                 <motion.div
@@ -255,7 +274,7 @@ export const InteractiveStats = () => {
                   variants={chartContainerVariants}
                   initial="hidden"
                   animate="visible"
-                  className="bg-white/10 backdrop-blur-lg rounded-xl p-6 hover:bg-white/15 transition-all duration-300"
+                  className="bg-white/10 backdrop-blur-lg rounded-xl p-6 hover:bg-white/15 transition-all duration-300 h-full"
                   whileHover={{ scale: 1.02 }}
                   onClick={() => setSelectedChart('resources')}
                 >
@@ -263,7 +282,9 @@ export const InteractiveStats = () => {
                     <Users className="w-6 h-6 text-pink-400 mr-2" />
                     <h3 className="text-xl font-semibold text-white">Resource Usage</h3>
                   </div>
-                  <Pie data={resourceUsageData} options={chartOptions} />
+                  <div className="h-64">
+                    <Pie data={resourceUsageData} options={{...chartOptions, maintainAspectRatio: false}} />
+                  </div>
                 </motion.div>
 
                 <motion.div
@@ -271,7 +292,7 @@ export const InteractiveStats = () => {
                   variants={chartContainerVariants}
                   initial="hidden"
                   animate="visible"
-                  className="bg-white/10 backdrop-blur-lg rounded-xl p-6 hover:bg-white/15 transition-all duration-300"
+                  className="bg-white/10 backdrop-blur-lg rounded-xl p-6 hover:bg-white/15 transition-all duration-300 h-full"
                   whileHover={{ scale: 1.02 }}
                   onClick={() => setSelectedChart('stress')}
                 >
@@ -279,7 +300,9 @@ export const InteractiveStats = () => {
                     <Sparkles className="w-6 h-6 text-yellow-400 mr-2" />
                     <h3 className="text-xl font-semibold text-white">Stress Levels</h3>
                   </div>
-                  <Doughnut data={stressLevelData} options={chartOptions} />
+                  <div className="h-64">
+                    <Doughnut data={stressLevelData} options={{...chartOptions, maintainAspectRatio: false}} />
+                  </div>
                 </motion.div>
               </>
             )}
