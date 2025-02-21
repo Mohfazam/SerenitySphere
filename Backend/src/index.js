@@ -10,12 +10,9 @@ const UserModel = require("../models/UsersSchema");
 
 const app = express();
 const MONGOOSE_URL = process.env.MONGO_URL;
-try {
-  mongoose.connect(MONGOOSE_URL);
-  console.log("Connected to MongoDB");
-} catch {
-  console.log("cannot connect to the DB");
-}
+
+  mongoose.connect(MONGOOSE_URL).then(console.log("Connected to MongoDB")).catch(console.log("Something went wrong"));
+
 
 app.use(express.json());
 app.use(cors());
@@ -25,9 +22,11 @@ app.post("/Signup", async (req, res) => {
     const username = req.body.username;
     const email = req.body.email;
     const password = req.body.password;
+    const salt = bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
     const userData = { username, email, password };
 
-    const User = new UserModel({ username, email, password });
+    const User = new UserModel({ username, email, hashedPassword });
     await User.save();
 
     res.status(200).json({
@@ -35,10 +34,10 @@ app.post("/Signup", async (req, res) => {
       username,
       email,
       password,
-      objectid: mongoose.objectid,
+      objectid: User._id
     });
   } catch {
-    res.status(404).json({
+    res.status(500).json({
       Msg: "Something went wrong",
     });
   }
