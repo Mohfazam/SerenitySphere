@@ -1,16 +1,34 @@
 import React, { useCallback, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Brain, Heart, Users, ArrowRight } from 'lucide-react';
-import Particles from "react-tsparticles";
-import { loadFull } from "tsparticles";
+
+// The main issue is here - the component tries to use Particles but doesn't handle potential missing dependencies
+// Let's make the Particles import conditional
+let Particles;
+let loadFull;
+try {
+  // Dynamic import to prevent errors if the module isn't available
+  Particles = require("react-tsparticles").default;
+  loadFull = require("tsparticles").loadFull;
+} catch (err) {
+  // Create a fallback component if the library isn't available
+  Particles = ({ children }) => <div className="particles-fallback">{children}</div>;
+  loadFull = async () => console.warn("tsparticles not available");
+}
 
 export const BlogHighlights = () => {
   const { scrollYProgress } = useScroll();
   const opacity = useTransform(scrollYProgress, [0, 0.3], [0, 1]);
   const [isHovered, setIsHovered] = useState(null);
+  const [particlesLoaded, setParticlesLoaded] = useState(false);
 
   const particlesInit = useCallback(async (engine) => {
-    await loadFull(engine);
+    try {
+      await loadFull(engine);
+      setParticlesLoaded(true);
+    } catch (err) {
+      console.error("Failed to initialize particles:", err);
+    }
   }, []);
 
   const posts = [
@@ -39,56 +57,58 @@ export const BlogHighlights = () => {
 
   return (
     <div className="relative min-h-screen bg-[#0A0F1C] overflow-hidden">
-      <Particles
-        id="tsparticles"
-        init={particlesInit}
-        options={{
-          background: {
-            opacity: 0
-          },
-          fpsLimit: 120,
-          particles: {
-            color: {
-              value: ["#FF3F8E", "#4169E1", "#8A2BE2"]
+      {Particles && (
+        <Particles
+          id="tsparticles"
+          init={particlesInit}
+          options={{
+            background: {
+              opacity: 0
             },
-            links: {
-              enable: true,
-              color: "#ffffff",
-              distance: 150,
-              opacity: 0.1,
-              width: 1
-            },
-            move: {
-              enable: true,
-              speed: 0.5,
-              direction: "none",
-              random: true,
-              straight: false,
-              outModes: {
-                default: "bounce"
-              }
-            },
-            number: {
-              value: 30,
-              density: {
+            fpsLimit: 120,
+            particles: {
+              color: {
+                value: ["#FF3F8E", "#4169E1", "#8A2BE2"]
+              },
+              links: {
                 enable: true,
-                value_area: 800
+                color: "#ffffff",
+                distance: 150,
+                opacity: 0.1,
+                width: 1
+              },
+              move: {
+                enable: true,
+                speed: 0.5,
+                direction: "none",
+                random: true,
+                straight: false,
+                outModes: {
+                  default: "bounce"
+                }
+              },
+              number: {
+                value: 30,
+                density: {
+                  enable: true,
+                  value_area: 800
+                }
+              },
+              opacity: {
+                value: 0.15,
+                random: true
+              },
+              shape: {
+                type: "circle"
+              },
+              size: {
+                value: 3,
+                random: true
               }
-            },
-            opacity: {
-              value: 0.15,
-              random: true
-            },
-            shape: {
-              type: "circle"
-            },
-            size: {
-              value: 3,
-              random: true
             }
-          }
-        }}
-      />
+          }}
+        />
+      )}
 
       <motion.div 
         style={{ opacity }}
@@ -210,4 +230,3 @@ export const BlogHighlights = () => {
     </div>
   );
 };
-
