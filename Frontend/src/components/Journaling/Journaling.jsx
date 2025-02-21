@@ -2,10 +2,11 @@
 
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Save, BookOpen, Trash, Share, X } from "lucide-react"
+import { Save, BookOpen, Trash, Share, X, NotebookPen  } from "lucide-react"
 import { RichTextEditor } from "./RichTextEditor"
 import { VoiceInput } from "./VoiceInput"
 import { MoodSelector } from "./MoodSelector"
+import {Navbar} from "../Navbar"
 import { toast, ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 
@@ -104,6 +105,7 @@ export function Journaling() {
 
   return (
     <div className="min-h-screen w-full flex flex-col bg-gray-900">
+      <Navbar title="mindscape" icon={NotebookPen } />
       <div className="flex-1 flex flex-col bg-gradient-to-br from-gray-900 to-gray-800 p-6 md:p-8">
         <h2 className="text-2xl font-bold text-gray-100 mb-4">Journaling</h2>
 

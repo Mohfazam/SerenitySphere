@@ -1,13 +1,11 @@
-// MentalHealthTest.jsx
-"use client"
-
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { ChevronLeft, Sparkles } from "lucide-react"
+import { ChevronLeft, Sparkles, Dna } from "lucide-react"
 import AssessmentForm from "./AssessmentForm"
 import MentalHealthProfile from "./MentalHealthProfile"
 import PersonalizedRoadmap from "./PersonalizedRoadmap"
 import ProgressTracker from "./ProgressTracker"
+import {Navbar} from '../Navbar'
 
 const MentalHealthTest = () => {
   const [step, setStep] = useState("assessment")
@@ -49,6 +47,7 @@ const MentalHealthTest = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-gray-900 dark:to-gray-900 py-12 px-4 sm:px-6 lg:px-8">
+      <Navbar title="Psychgene " icon={Dna} />
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-8 space-y-4">
           <motion.div 
