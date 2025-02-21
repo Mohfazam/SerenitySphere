@@ -2,6 +2,7 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Brain, User, Lock, Mail, ChevronRight } from 'lucide-react';
 
 export const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -37,76 +38,100 @@ export const SignUp = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="sm:mx-auto sm:w-full sm:max-w-md"
+    <section className="relative min-h-screen overflow-hidden py-20 bg-gradient-to-br from-gray-900 to-gray-800">
+      {/* Floating Background Elements */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="absolute inset-0 pointer-events-none"
       >
-        <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+        <motion.div
+          animate={{ y: [0, -40, 0], rotate: [0, 10, 0] }}
+          transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute top-20 left-1/4 w-64 h-64 bg-blue-800/20 rounded-full blur-3xl"
+        />
+        <motion.div
+          animate={{ y: [0, -60, 0], scale: [1, 1.1, 1] }}
+          transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut', delay: 3 }}
+          className="absolute top-1/2 right-1/4 w-48 h-48 bg-blue-700/20 rounded-full blur-3xl"
+        />
+      </motion.div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div 
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="relative z-10 bg-gray-800/70 backdrop-blur-xl rounded-2xl shadow-2xl p-8 max-w-md mx-auto border border-gray-700/50"
+        >
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-extrabold text-gray-900">
-              Create Account
+            <motion.div
+              initial={{ scale: 0.8 }}
+              animate={{ scale: 1 }}
+              className="inline-block p-4 bg-blue-900/20 rounded-full mb-6"
+            >
+              <Brain className="w-8 h-8 text-blue-400" />
+            </motion.div>
+            <h2 className="text-3xl font-bold text-white mb-2">
+              Create Your Account
             </h2>
-            <p className="mt-2 text-sm text-gray-600">
-              Already have an account?{' '}
-              <Link to="/signin" className="text-blue-600 hover:text-blue-500">
-                Sign in here
-              </Link>
+            <p className="text-gray-400">
+              Join our mental wellness community
             </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label htmlFor="username" className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-gray-300 mb-2">
                 Username
               </label>
-              <div className="mt-1">
+              <div className="relative">
+                <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <input
-                  id="username"
-                  type="text"
                   value={formData.username}
                   onChange={(e) => setFormData({...formData, username: e.target.value})}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  className="w-full pl-10 pr-4 py-3 bg-gray-900/50 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="Enter your username"
                 />
                 {errors.username && (
-                  <p className="mt-2 text-sm text-red-600">{errors.username}</p>
+                  <p className="mt-2 text-sm text-red-400">{errors.username}</p>
                 )}
               </div>
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                Email address
+              <label className="block text-sm font-medium text-gray-300 mb-2">
+                Email
               </label>
-              <div className="mt-1">
+              <div className="relative">
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <input
-                  id="email"
                   type="email"
                   value={formData.email}
                   onChange={(e) => setFormData({...formData, email: e.target.value})}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  className="w-full pl-10 pr-4 py-3 bg-gray-900/50 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="your@email.com"
                 />
                 {errors.email && (
-                  <p className="mt-2 text-sm text-red-600">{errors.email}</p>
+                  <p className="mt-2 text-sm text-red-400">{errors.email}</p>
                 )}
               </div>
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-gray-300 mb-2">
                 Password
               </label>
-              <div className="mt-1">
+              <div className="relative">
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <input
-                  id="password"
                   type="password"
                   value={formData.password}
                   onChange={(e) => setFormData({...formData, password: e.target.value})}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  className="w-full pl-10 pr-4 py-3 bg-gray-900/50 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="••••••••"
                 />
                 {errors.password && (
-                  <p className="mt-2 text-sm text-red-600">{errors.password}</p>
+                  <p className="mt-2 text-sm text-red-400">{errors.password}</p>
                 )}
               </div>
             </div>
@@ -115,13 +140,21 @@ export const SignUp = () => {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               type="submit"
-              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              className="w-full py-3 px-6 bg-gradient-to-r from-blue-600 to-blue-500 rounded-lg font-medium text-white shadow-lg hover:shadow-blue-500/20 transition-all"
             >
-              Sign Up
+              Create Account
+              <ChevronRight className="inline-block ml-2 w-5 h-5" />
             </motion.button>
+
+            <p className="text-center text-gray-400 text-sm mt-6">
+              Already have an account?{' '}
+              <Link to="/signin" className="text-blue-400 hover:text-blue-300 transition-colors">
+                Sign in here
+              </Link>
+            </p>
           </form>
-        </div>
-      </motion.div>
-    </div>
+        </motion.div>
+      </div>
+    </section>
   );
 };
