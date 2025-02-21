@@ -1,70 +1,204 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Check, Zap } from 'lucide-react';
+import { Check, Shield, Gem, Crown } from 'lucide-react';
 
 export const Pricing = () => {
+  const [hoveredPlan, setHoveredPlan] = useState(null);
+
   const plans = [
     {
-      name: 'Basic',
-      price: '$0',
-      features: ['Mood Tracking', 'Community Access', 'Basic Insights'],
-      icon: Zap,
+      name: 'Essential',
+      price: '₹0',
+      period: 'per month',
+      description: 'Perfect for individuals and small teams',
+      features: [
+        'All Essential Features',
+        'Basic Analytics Dashboard',
+        'Email Support',
+        'Up to 5 Team Members',
+        'Basic Integrations'
+      ],
+      icon: Shield,
+      color: 'from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900',
+      accent: 'border-slate-200 dark:border-slate-700'
     },
     {
-      name: 'Pro',
-      price: '$9.99',
-      features: ['Advanced Insights', 'AI Recommendations', 'Priority Support'],
-      icon: Check,
+      name: 'Professional',
+      price: '₹99',
+      period: 'per month',
+      description: 'Ideal for growing businesses',
+      features: [
+        'Everything in Essential',
+        'Advanced Analytics',
+        'Priority Support',
+        'Up to 20 Team Members',
+        'Advanced Integrations'
+      ],
+      icon: Gem,
+      color: 'from-white to-blue-50 dark:from-slate-900 dark:to-blue-900/20',
+      accent: 'border-blue-100 dark:border-blue-800',
+      popular: true
     },
     {
-      name: 'Premium',
-      price: '$19.99',
-      features: ['All Pro Features', 'Personalized Therapy', '24/7 Support'],
-      icon: Check,
-    },
+      name: 'Enterprise',
+      price: '₹149',
+      period: 'per month',
+      description: 'For large-scale organizations',
+      features: [
+        'Everything in Professional',
+        'Custom Analytics',
+        'Dedicated Support',
+        'Unlimited Team Members',
+        'Custom Integrations'
+      ],
+      icon: Crown,
+      color: 'from-white to-purple-50 dark:from-slate-900 dark:to-purple-900/20',
+      accent: 'border-purple-100 dark:border-purple-800'
+    }
   ];
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.1
+      }
+    }
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 20
+      }
+    }
+  };
+
+  const featureVariants = {
+    hidden: { opacity: 0, x: -10 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 10
+      }
+    }
+  };
+
   return (
-    <section className="py-20 bg-gray-50 dark:bg-gray-900">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center">
-          <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">
-            Pricing Plans
-          </h2>
-          <p className="mt-4 max-w-2xl text-xl text-gray-500 dark:text-gray-400 mx-auto">
-            Choose the plan that fits your needs.
-          </p>
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100 dark:from-slate-900 dark:to-black py-20 px-4">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-16">
+          <motion.h1
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-4xl font-semibold text-slate-900 dark:text-white mb-4"
+          >
+            Simple, Transparent Pricing
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-lg text-slate-600 dark:text-slate-400"
+          >
+            Choose the perfect plan for your business needs
+          </motion.p>
         </div>
-        <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-8">
+
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="grid grid-cols-1 md:grid-cols-3 gap-8"
+        >
           {plans.map((plan, index) => (
             <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.2 }}
-              viewport={{ once: true }}
-              className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+              key={plan.name}
+              variants={cardVariants}
+              onHoverStart={() => setHoveredPlan(index)}
+              onHoverEnd={() => setHoveredPlan(null)}
+              className={`relative rounded-2xl overflow-hidden bg-gradient-to-b ${plan.color} border-2 ${plan.accent}`}
+              style={{
+                boxShadow: hoveredPlan === index ? '0 8px 30px rgba(0, 0, 0, 0.12)' : '0 4px 6px rgba(0, 0, 0, 0.05)'
+              }}
             >
-              <div className="flex items-center justify-center">
-                <plan.icon className="w-12 h-12 text-blue-600 dark:text-blue-400" />
+              {plan.popular && (
+                <div className="absolute top-6 right-6">
+                  <span className="inline-flex items-center px-3 py-1 text-sm font-medium text-blue-700 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 rounded-full">
+                    Popular
+                  </span>
+                </div>
+              )}
+
+              <div className="p-8">
+                <div className="flex items-center mb-6">
+                  <plan.icon className={`w-8 h-8 ${plan.popular ? 'text-blue-600 dark:text-blue-400' : 'text-slate-700 dark:text-slate-300'}`} />
+                  <h3 className="ml-3 text-xl font-semibold text-slate-900 dark:text-white">
+                    {plan.name}
+                  </h3>
+                </div>
+
+                <p className="text-slate-600 dark:text-slate-400 mb-6 min-h-[48px]">
+                  {plan.description}
+                </p>
+
+                <div className="flex items-baseline mb-8">
+                  <span className="text-4xl font-bold text-slate-900 dark:text-white">
+                    {plan.price}
+                  </span>
+                  <span className="ml-2 text-slate-600 dark:text-slate-400">
+                    {plan.period}
+                  </span>
+                </div>
+
+                <div className="space-y-4 mb-8">
+                  {plan.features.map((feature, i) => (
+                    <motion.div
+                      key={i}
+                      variants={featureVariants}
+                      className="flex items-center text-slate-700 dark:text-slate-300"
+                    >
+                      <Check className="w-5 h-5 mr-3 text-blue-600 dark:text-blue-400" />
+                      <span>{feature}</span>
+                    </motion.div>
+                  ))}
+                </div>
+
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className={`w-full py-3 px-6 rounded-lg text-center font-medium transition-colors
+                    ${plan.popular 
+                      ? 'bg-blue-600 hover:bg-blue-700 text-white' 
+                      : 'bg-slate-800 dark:bg-white hover:bg-slate-900 dark:hover:bg-slate-100 text-white dark:text-slate-900'}`}
+                >
+                  Get Started
+                </motion.button>
               </div>
-              <h3 className="mt-4 text-2xl font-bold text-gray-900 dark:text-white">{plan.name}</h3>
-              <p className="mt-2 text-4xl font-bold text-gray-900 dark:text-white">{plan.price}</p>
-              <ul className="mt-4 space-y-2">
-                {plan.features.map((feature, i) => (
-                  <li key={i} className="flex items-center text-gray-500 dark:text-gray-400">
-                    <Check className="w-4 h-4 mr-2 text-green-500" />
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-              <button className="mt-6 w-full px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition-colors duration-200">
-                Get Started
-              </button>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6 }}
+          className="mt-16 text-center text-sm text-slate-600 dark:text-slate-400"
+        >
+          All plans include 30-day money-back guarantee and 24/7 customer support
+        </motion.div>
       </div>
-    </section>
+    </div>
   );
 };
