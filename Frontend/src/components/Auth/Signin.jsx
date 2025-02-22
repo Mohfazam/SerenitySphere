@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Brain, User, Lock, ChevronRight } from 'lucide-react';
+import axios from 'axios';
 
 export const Signin = () => {
   const [formData, setFormData] = useState({
@@ -10,6 +11,9 @@ export const Signin = () => {
     password: ''
   });
   const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [serverError, setServerError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
 
   const validateForm = () => {
     const newErrors = {};
@@ -19,17 +23,59 @@ export const Signin = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validateForm()) {
-      console.log(formData);
-      // Add your signin logic here
+    setServerError(null);
+    setSuccessMessage(null);
+
+    if (!validateForm()) return;
+
+    setIsLoading(true);
+    
+    try {
+      const response = await axios.post(
+        'https://serenityspherebackedn3.vercel.app/Login',
+        {
+          username: formData.username,
+          password: formData.password
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+
+      if (response.data.success) {
+        setSuccessMessage('Login successful! Redirecting...');
+        
+        // Set authentication flag and user data
+        localStorage.setItem('isAuthenticated', 'true');
+        localStorage.setItem('user', JSON.stringify(response.data.user));
+
+        // Redirect to home with full reload to update navbar
+        setTimeout(() => {
+          window.location.href = '/';
+        }, 1500);
+      }
+
+    } catch (error) {
+      console.error('Login error:', error);
+      
+      if (error.response) {
+        setServerError(error.response.data?.message || error.response.data?.error);
+      } else if (error.request) {
+        setServerError('No response from server - check your connection');
+      } else {
+        setServerError('Login failed - please try again');
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <section className="relative min-h-screen overflow-hidden py-20 bg-gradient-to-br from-gray-900 to-gray-800">
-      {/* Floating Background Elements */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -70,6 +116,18 @@ export const Signin = () => {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
+            {serverError && (
+              <div className="p-3 bg-red-500/20 text-red-400 rounded-lg text-sm">
+                {serverError}
+              </div>
+            )}
+            
+            {successMessage && (
+              <div className="p-3 bg-green-500/20 text-green-400 rounded-lg text-sm">
+                {successMessage}
+              </div>
+            )}
+
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-2">
                 Username
@@ -111,10 +169,11 @@ export const Signin = () => {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               type="submit"
-              className="w-full py-3 px-6 bg-gradient-to-r from-blue-600 to-blue-500 rounded-lg font-medium text-white shadow-lg hover:shadow-blue-500/20 transition-all"
+              disabled={isLoading}
+              className="w-full py-3 px-6 bg-gradient-to-r from-blue-600 to-blue-500 rounded-lg font-medium text-white shadow-lg hover:shadow-blue-500/20 transition-all disabled:opacity-70 disabled:cursor-not-allowed"
             >
-              Sign In
-              <ChevronRight className="inline-block ml-2 w-5 h-5" />
+              {isLoading ? 'Signing In...' : 'Sign In'}
+              {!isLoading && <ChevronRight className="inline-block ml-2 w-5 h-5" />}
             </motion.button>
 
             <p className="text-center text-gray-400 text-sm mt-6">
