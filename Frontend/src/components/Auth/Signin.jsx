@@ -1,11 +1,12 @@
 // Signin.jsx
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Brain, User, Lock, ChevronRight } from 'lucide-react';
 import axios from 'axios';
 
 export const Signin = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: '',
     password: ''
@@ -55,7 +56,7 @@ export const Signin = () => {
 
         // Redirect to home with full reload to update navbar
         setTimeout(() => {
-          window.location.href = '/';
+          navigate("/");
         }, 1500);
       }
 

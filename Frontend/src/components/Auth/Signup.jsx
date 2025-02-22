@@ -1,11 +1,12 @@
 // Signup.jsx
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Brain, User, Lock, Mail, ChevronRight } from 'lucide-react';
 import axios from 'axios';
 
 export const SignUp = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -56,7 +57,7 @@ export const SignUp = () => {
       setFormData({ username: '', email: '', password: '' });
   
       setTimeout(() => {
-        window.location.href = '/signin';
+        navigate('/signin');
       }, 2000);
   
     } catch (error) {
