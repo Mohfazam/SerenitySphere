@@ -102,8 +102,8 @@ const getRandomPosition = (existingPositions) => {
   let position;
   let attempts = 0;
   const maxAttempts = 50;
-  const minDistance = 60; // Increased minimum distance between plants
-  const padding = 10; // Padding from edges
+  const minDistance = 60;
+  const padding = 10;
 
   do {
     position = {
@@ -111,7 +111,6 @@ const getRandomPosition = (existingPositions) => {
       y: padding + Math.random() * (100 - 2 * padding)
     };
 
-    // Check if the position is too close to existing plants
     const isTooClose = existingPositions.some(pos => {
       const dx = pos.x - position.x;
       const dy = pos.y - position.y;
@@ -235,7 +234,6 @@ export const MoodGarden = () => {
 
   return (
     <section className={`relative overflow-hidden py-20 sm:py-32 ${getBackgroundColor()}`}>
-      {/* Background Floating Circles */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -304,12 +302,14 @@ export const MoodGarden = () => {
                 <motion.div
                   key={plant.id}
                   className="absolute"
+                  style={{
+                    left: `${plant.position.x}%`,
+                    top: `${plant.position.y}%`,
+                  }}
                   initial={{ scale: 0, opacity: 0 }}
                   animate={{
                     scale: plant.scale,
                     opacity: 1,
-                    x: `${plant.position.x}%`,
-                    y: `${plant.position.y}%`,
                     rotate: plant.rotation
                   }}
                   transition={{
@@ -395,5 +395,3 @@ export const MoodGarden = () => {
     </section>
   );
 };
-
-// export default MoodGarden;
