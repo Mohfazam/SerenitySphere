@@ -46,21 +46,34 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
   };
 
   const renderMoodHistory = () => {
+    // Filter out entries with undefined moods
+    const validEntries = moodEntries.filter((entry) =>
+      moodEmojis.some((mood) => mood.label === entry.mood.label)
+    );
+  
     const data = {
-      labels: moodEntries.map((entry) => formatDate(entry.date)), // Use formatted dates
+      labels: validEntries.map((entry) => formatDate(entry.date)), // Use formatted dates
       datasets: [
         {
           label: "Mood",
-          data: moodEntries.map((entry) => moodEmojis.findIndex((mood) => mood.label === entry.mood.label)),
-          backgroundColor: moodEntries.map((entry) => moodEmojis.find((mood) => mood.label === entry.mood.label).color),
-          borderColor: moodEntries.map((entry) => moodEmojis.find((mood) => mood.label === entry.mood.label).color),
+          data: validEntries.map((entry) =>
+            moodEmojis.findIndex((mood) => mood.label === entry.mood.label)
+          ),
+          backgroundColor: validEntries.map((entry) => {
+            const mood = moodEmojis.find((mood) => mood.label === entry.mood.label);
+            return mood ? mood.color : "rgba(0, 0, 0, 0.1)"; // Fallback color (should not be needed now)
+          }),
+          borderColor: validEntries.map((entry) => {
+            const mood = moodEmojis.find((mood) => mood.label === entry.mood.label);
+            return mood ? mood.color : "rgba(0, 0, 0, 0.1)"; // Fallback color (should not be needed now)
+          }),
           borderWidth: 1,
           fill: false,
           tension: 0.4,
         },
       ],
     };
-
+  
     const options = {
       ...baseOptions,
       responsive: true,
@@ -68,15 +81,33 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
         y: {
           beginAtZero: true,
           max: moodEmojis.length - 1,
+          title: {
+            display: true,
+            text: "Mood Level", // Y-axis title
+            color: "white", // Y-axis title color
+            font: {
+              size: 14, // Y-axis title font size
+              weight: "bold", // Y-axis title font weight
+            },
+          },
           ticks: {
             color: "white", // Set y-axis text color to white
-            callback: (value) => moodEmojis[value]?.label,
+            callback: (value) => moodEmojis[value]?.label, // No fallback label
           },
           grid: {
             color: "rgba(255, 255, 255, 0.1)", // Set grid color for y-axis
           },
         },
         x: {
+          title: {
+            display: true,
+            text: "Date", // X-axis title
+            color: "white", // X-axis title color
+            font: {
+              size: 14, // X-axis title font size
+              weight: "bold", // X-axis title font weight
+            },
+          },
           ticks: {
             color: "white", // Set x-axis text color to white
             autoSkip: true, // Automatically skip labels to avoid clutter
@@ -93,14 +124,17 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
         },
         tooltip: {
           callbacks: {
-            label: (context) => `Mood: ${moodEmojis[context.raw].label}`,
+            label: (context) => {
+              const mood = moodEmojis[context.raw];
+              return `Mood: ${mood.label}`; // No fallback label
+            },
           },
           bodyColor: "white", // Set tooltip text color to white
           titleColor: "white", // Set tooltip title color to white
         },
       },
     };
-
+  
     return (
       <Line
         data={data}
