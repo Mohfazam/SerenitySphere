@@ -47,7 +47,7 @@ const MentalHealthTest = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-gray-900 dark:to-gray-900 py-12 px-4 sm:px-6 lg:px-8">
-      <Navbar title="Psychgene " icon={Dna} />
+      <Navbar title="PsychGene " icon={Dna} />
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-8 space-y-4">
           <motion.div 

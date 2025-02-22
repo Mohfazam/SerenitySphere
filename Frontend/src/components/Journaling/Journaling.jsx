@@ -105,9 +105,9 @@ export function Journaling() {
 
   return (
     <div className="min-h-screen w-full flex flex-col bg-gray-900">
-      <Navbar title="mindscape" icon={NotebookPen } />
+      <Navbar title="MindScape" icon={NotebookPen } />
       <div className="flex-1 flex flex-col bg-gradient-to-br from-gray-900 to-gray-800 p-6 md:p-8">
-        <h2 className="text-2xl font-bold text-gray-100 mb-4">Journaling</h2>
+        <h2 className="text-2xl font-bold text-gray-100 mb-4">MindScape: Your Personal Journal</h2>
 
         <div className="mb-4">
           <div className="flex items-center gap-2 mb-2">
