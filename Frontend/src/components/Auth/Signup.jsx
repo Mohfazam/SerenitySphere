@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Brain, User, Lock, Mail, ChevronRight } from 'lucide-react';
+import axios from 'axios';
 
 export const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -11,6 +12,9 @@ export const SignUp = () => {
     password: ''
   });
   const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [serverError, setServerError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
 
   const validateForm = () => {
     const newErrors = {};
@@ -29,17 +33,49 @@ export const SignUp = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validateForm()) {
-      console.log(formData);
-      // Add your signup logic here
+    setServerError(null);
+    setSuccessMessage(null);
+  
+    if (!validateForm()) return;
+  
+    setIsLoading(true);
+    
+    try {
+      const requestBody = {
+        username: formData.username,
+        email: formData.email,
+        password: formData.password
+      };
+  
+      const response = await axios.post(
+        'https://serenityspherebackedn3.vercel.app/Signup', requestBody);
+  
+      setSuccessMessage('Account created successfully! Redirecting...');
+      setFormData({ username: '', email: '', password: '' });
+  
+      setTimeout(() => {
+        window.location.href = '/signin';
+      }, 2000);
+  
+    } catch (error) {
+      console.error('Signup error:', error);
+      
+      if (error.code === 'ERR_NETWORK') {
+        setServerError('Cannot connect to server. Check your internet connection');
+      } else if (error.response) {
+        setServerError(error.response.data?.Msg || 'Signup failed. Please try again.');
+      } else {
+        setServerError('An unexpected error occurred');
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <section className="relative min-h-screen overflow-hidden py-20 bg-gradient-to-br from-gray-900 to-gray-800">
-      {/* Floating Background Elements */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -80,6 +116,18 @@ export const SignUp = () => {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
+            {serverError && (
+              <div className="p-3 bg-red-500/20 text-red-400 rounded-lg text-sm">
+                {serverError}
+              </div>
+            )}
+            
+            {successMessage && (
+              <div className="p-3 bg-green-500/20 text-green-400 rounded-lg text-sm">
+                {successMessage}
+              </div>
+            )}
+
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-2">
                 Username
@@ -140,10 +188,11 @@ export const SignUp = () => {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               type="submit"
-              className="w-full py-3 px-6 bg-gradient-to-r from-blue-600 to-blue-500 rounded-lg font-medium text-white shadow-lg hover:shadow-blue-500/20 transition-all"
+              disabled={isLoading}
+              className="w-full py-3 px-6 bg-gradient-to-r from-blue-600 to-blue-500 rounded-lg font-medium text-white shadow-lg hover:shadow-blue-500/20 transition-all disabled:opacity-70 disabled:cursor-not-allowed"
             >
-              Create Account
-              <ChevronRight className="inline-block ml-2 w-5 h-5" />
+              {isLoading ? 'Creating Account...' : 'Create Account'}
+              {!isLoading && <ChevronRight className="inline-block ml-2 w-5 h-5" />}
             </motion.button>
 
             <p className="text-center text-gray-400 text-sm mt-6">
