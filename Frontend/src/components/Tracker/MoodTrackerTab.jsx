@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   Smile,
   Meh,
@@ -72,6 +74,117 @@ const MoodTrackerTab = ({ addMoodEntry, darkMode }) => {
 
     addMoodEntry(newEntry);
     resetForm();
+
+    // Display toast based on mood
+    switch (currentMood.label) {
+      case "Happy":
+        toast.success(
+          <div className="flex items-center">
+            <Smile size={24} className="mr-2" />
+            <span>Great to see you're happy! Keep smiling! 😊</span>
+          </div>,
+          {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            className: "!bg-emerald-900 !text-emerald-100",
+            bodyClassName: "font-semibold",
+          }
+        );
+        break;
+      case "Neutral":
+        toast.info(
+          <div className="flex items-center">
+            <Meh size={24} className="mr-2" />
+            <span>Feeling neutral? Take a moment to reflect. 🧘‍♂️</span>
+          </div>,
+          {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            className: "!bg-amber-900 !text-amber-100",
+            bodyClassName: "font-semibold",
+          }
+        );
+        break;
+      case "Sad":
+        toast.warn(
+          <div className="flex items-center">
+            <Frown size={24} className="mr-2" />
+            <span>It's okay to feel sad. Remember, this too shall pass. 🌧️</span>
+          </div>,
+          {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            className: "!bg-blue-900 !text-blue-100",
+            bodyClassName: "font-semibold",
+          }
+        );
+        break;
+      case "Angry":
+        toast.error(
+          <div className="flex items-center">
+            <Angry size={24} className="mr-2" />
+            <span>Feeling angry? Take a deep breath and relax. 🧘‍♀️</span>
+          </div>,
+          {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            className: "!bg-rose-900 !text-rose-100",
+            bodyClassName: "font-semibold",
+          }
+        );
+        break;
+      case "Energetic":
+        toast.success(
+          <div className="flex items-center">
+            <Zap size={24} className="mr-2" />
+            <span>Feeling energetic? Channel that energy into something great! 💪</span>
+          </div>,
+          {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            className: "!bg-violet-900 !text-violet-100",
+            bodyClassName: "font-semibold",
+          }
+        );
+        break;
+      default:
+        toast("Mood logged successfully!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          className: "!bg-gray-900 !text-gray-100",
+          bodyClassName: "font-semibold",
+        });
+    }
   };
 
   const resetForm = () => {
@@ -114,6 +227,19 @@ const MoodTrackerTab = ({ addMoodEntry, darkMode }) => {
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.3 }}
     >
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        toastClassName="!bg-gray-900 !text-gray-100 rounded-lg shadow-lg"
+        bodyClassName="p-4"
+      />
       <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
         <h2 className="text-2xl font-semibold mb-4">How are you feeling?</h2>
         <div className="grid grid-cols-5 gap-4 mb-6">

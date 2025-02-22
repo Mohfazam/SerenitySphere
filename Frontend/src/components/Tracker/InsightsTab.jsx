@@ -3,13 +3,12 @@
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Line, Bar, Pie, Radar } from "react-chartjs-2";
-import { Chart } from "chart.js/auto"; 
+import { Chart } from "chart.js/auto";
 
 const InsightsTab = ({ moodEntries, darkMode }) => {
-
   const baseOptions = {
-    color: 'white', 
-    borderColor: 'rgba(255, 255, 255, 0.1)',
+    color: "white", // Set all text to white
+    borderColor: darkMode ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)",
   };
 
   const moodEmojis = [
@@ -40,9 +39,15 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
     };
   }, []);
 
+  // Helper function to format dates as "MM/DD"
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return `${date.getMonth() + 1}/${date.getDate()}`; // Format as "MM/DD"
+  };
+
   const renderMoodHistory = () => {
     const data = {
-      labels: moodEntries.map((entry) => new Date(entry.date).toLocaleDateString()),
+      labels: moodEntries.map((entry) => formatDate(entry.date)), // Use formatted dates
       datasets: [
         {
           label: "Mood",
@@ -64,13 +69,21 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
           beginAtZero: true,
           max: moodEmojis.length - 1,
           ticks: {
-            color: 'white', // Set y-axis text color to white
+            color: "white", // Set y-axis text color to white
             callback: (value) => moodEmojis[value]?.label,
+          },
+          grid: {
+            color: "rgba(255, 255, 255, 0.1)", // Set grid color for y-axis
           },
         },
         x: {
           ticks: {
-            color: 'white', // Set x-axis text color to white
+            color: "white", // Set x-axis text color to white
+            autoSkip: true, // Automatically skip labels to avoid clutter
+            maxTicksLimit: 10, // Limit the number of labels shown
+          },
+          grid: {
+            color: "rgba(255, 255, 255, 0.1)", // Set grid color for x-axis
           },
         },
       },
@@ -82,6 +95,8 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
           callbacks: {
             label: (context) => `Mood: ${moodEmojis[context.raw].label}`,
           },
+          bodyColor: "white", // Set tooltip text color to white
+          titleColor: "white", // Set tooltip title color to white
         },
       },
     };
@@ -131,13 +146,17 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
         legend: {
           position: "right",
           labels: {
-            color: 'white', 
+            color: "white", // Set legend text color to white
           },
         },
         title: {
           display: true,
           text: "Activity Distribution",
-          color: 'white', 
+          color: "white", // Set title text color to white
+        },
+        tooltip: {
+          bodyColor: "white", // Set tooltip text color to white
+          titleColor: "white", // Set tooltip title color to white
         },
       },
     };
@@ -153,7 +172,7 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
 
   const renderSleepQualityChart = () => {
     const data = {
-      labels: moodEntries.map((entry) => new Date(entry.date).toLocaleDateString()),
+      labels: moodEntries.map((entry) => formatDate(entry.date)), // Use formatted dates
       datasets: [
         {
           label: "Sleep Hours",
@@ -172,7 +191,11 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
         title: {
           display: true,
           text: "Sleep Quality Over Time",
-          color: 'white', // Set title text color to white
+          color: "white", // Set title text color to white
+        },
+        tooltip: {
+          bodyColor: "white", // Set tooltip text color to white
+          titleColor: "white", // Set tooltip title color to white
         },
       },
       scales: {
@@ -181,15 +204,23 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
           title: {
             display: true,
             text: "Hours of Sleep",
-            color: 'white', // Set y-axis title text color to white
+            color: "white", // Set y-axis title text color to white
           },
           ticks: {
-            color: 'white', // Set y-axis text color to white
+            color: "white", // Set y-axis text color to white
+          },
+          grid: {
+            color: "rgba(255, 255, 255, 0.1)", // Set grid color for y-axis
           },
         },
         x: {
           ticks: {
-            color: 'white', // Set x-axis text color to white
+            color: "white", // Set x-axis text color to white
+            autoSkip: true, // Automatically skip labels to avoid clutter
+            maxTicksLimit: 10, // Limit the number of labels shown
+          },
+          grid: {
+            color: "rgba(255, 255, 255, 0.1)", // Set grid color for x-axis
           },
         },
       },
@@ -206,7 +237,7 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
 
   const renderWaterIntakeChart = () => {
     const data = {
-      labels: moodEntries.map((entry) => new Date(entry.date).toLocaleDateString()),
+      labels: moodEntries.map((entry) => formatDate(entry.date)), // Use formatted dates
       datasets: [
         {
           label: "Water Intake",
@@ -225,7 +256,11 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
         title: {
           display: true,
           text: "Daily Water Intake",
-          color: 'white', // Set title text color to white
+          color: "white", // Set title text color to white
+        },
+        tooltip: {
+          bodyColor: "white", // Set tooltip text color to white
+          titleColor: "white", // Set tooltip title color to white
         },
       },
       scales: {
@@ -234,15 +269,23 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
           title: {
             display: true,
             text: "Liters",
-            color: 'white', // Set y-axis title text color to white
+            color: "white", // Set y-axis title text color to white
           },
           ticks: {
-            color: 'white', // Set y-axis text color to white
+            color: "white", // Set y-axis text color to white
+          },
+          grid: {
+            color: "rgba(255, 255, 255, 0.1)", // Set grid color for y-axis
           },
         },
         x: {
           ticks: {
-            color: 'white', // Set x-axis text color to white
+            color: "white", // Set x-axis text color to white
+            autoSkip: true, // Automatically skip labels to avoid clutter
+            maxTicksLimit: 10, // Limit the number of labels shown
+          },
+          grid: {
+            color: "rgba(255, 255, 255, 0.1)", // Set grid color for x-axis
           },
         },
       },
@@ -259,7 +302,7 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
 
   const renderExerciseChart = () => {
     const data = {
-      labels: moodEntries.map((entry) => new Date(entry.date).toLocaleDateString()),
+      labels: moodEntries.map((entry) => formatDate(entry.date)), // Use formatted dates
       datasets: [
         {
           label: "Exercise Duration",
@@ -278,7 +321,11 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
         title: {
           display: true,
           text: "Daily Exercise Duration",
-          color: 'white', // Set title text color to white
+          color: "white", // Set title text color to white
+        },
+        tooltip: {
+          bodyColor: "white", // Set tooltip text color to white
+          titleColor: "white", // Set tooltip title color to white
         },
       },
       scales: {
@@ -287,15 +334,23 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
           title: {
             display: true,
             text: "Minutes",
-            color: 'white', // Set y-axis title text color to white
+            color: "white", // Set y-axis title text color to white
           },
           ticks: {
-            color: 'white', // Set y-axis text color to white
+            color: "white", // Set y-axis text color to white
+          },
+          grid: {
+            color: "rgba(255, 255, 255, 0.1)", // Set grid color for y-axis
           },
         },
         x: {
           ticks: {
-            color: 'white', // Set x-axis text color to white
+            color: "white", // Set x-axis text color to white
+            autoSkip: true, // Automatically skip labels to avoid clutter
+            maxTicksLimit: 10, // Limit the number of labels shown
+          },
+          grid: {
+            color: "rgba(255, 255, 255, 0.1)", // Set grid color for x-axis
           },
         },
       },
@@ -332,7 +387,6 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
 
     const count = moodEntries.length;
     const data = {
-      // ...baseOptions,
       labels: ["Mood", "Sleep", "Water", "Exercise"],
       datasets: [
         {
@@ -356,7 +410,11 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
         title: {
           display: true,
           text: "Mood Correlation with Habits",
-          color: 'white', // Set title text color to white
+          color: "white", // Set title text color to white
+        },
+        tooltip: {
+          bodyColor: "white", // Set tooltip text color to white
+          titleColor: "white", // Set tooltip title color to white
         },
       },
       scales: {
@@ -367,7 +425,10 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
           suggestedMin: 0,
           suggestedMax: 5,
           ticks: {
-            color: 'white', // Set radar chart text color to white
+            color: "white", // Set radar chart text color to white
+          },
+          grid: {
+            color: "rgba(255, 255, 255, 0.1)", // Set grid color for radar chart
           },
         },
       },
@@ -389,14 +450,14 @@ const InsightsTab = ({ moodEntries, darkMode }) => {
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.3 }}
     >
-      <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
+      <div className={`bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg ${darkMode ? "text-white" : "text-black"}`}>
         <h2 className="text-2xl font-semibold mb-4 text-white">Mood Insights</h2>
         {moodEntries.length === 0 ? (
-          <p className="text-white dark:text-gray-400">
+          <p className="text-gray-400">
             No mood entries yet. Start logging your moods to see insights!
           </p>
         ) : (
-          <div className="grid grid-cols-4 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <div className="bg-white dark:bg-gray-700 p-4 rounded-lg">
               <h3 className="text-lg font-semibold mb-2 text-white">Mood History</h3>
               {renderMoodHistory()}
