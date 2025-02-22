@@ -44,6 +44,50 @@ app.post("/Signup", async (req, res) => {
   }
 });
 
+app.post("/Login", async (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+
+    const user = await UserModel.findOne({ username });
+
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found"
+      });
+    }
+
+    const validPassword = await bcrypt.compare(password, user.password);
+    
+    if (!validPassword) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid password"
+      });
+    }
+
+
+    res.status(200).json({
+      success: true,
+      message: "Login successful",
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email
+      }
+    });
+
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+      error: err.message
+    });
+  }
+});
+
 app.listen(3000, () => {
   console.log("Server is running at post 3000");
 });
