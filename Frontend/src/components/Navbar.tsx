@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import { Menu, X, User, LayoutDashboard, LogOut } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 interface NavProps {
@@ -8,12 +8,69 @@ interface NavProps {
   icon: React.ElementType;
 }
 
+const ProfileBadge = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const handleSignOut = () => {
+    localStorage.removeItem('isAuthenticated');
+    navigate('/signin');
+  };
+
+  return (
+    <div className="relative ml-4">
+      <motion.button
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        onClick={() => setIsOpen(!isOpen)}
+        className="flex items-center space-x-2 bg-gray-100 dark:bg-gray-800 rounded-full p-2"
+      >
+        <User className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+      </motion.button>
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700"
+          >
+            <div className="p-2 space-y-2">
+              <button
+                onClick={() => navigate('/dashboard')}
+                className="w-full flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"
+              >
+                <LayoutDashboard className="h-4 w-4" />
+                <span>Your Dashboard</span>
+              </button>
+              <button
+                onClick={handleSignOut}
+                className="w-full flex items-center space-x-2 px-3 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-md"
+              >
+                <LogOut className="h-4 w-4" />
+                <span>Sign Out</span>
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+
 export const Navbar = ({ title, icon: Icon }: NavProps) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const { scrollY } = useScroll();
   const navbarHeight = useTransform(scrollY, [0, 100], [80, 60]);
   const navbarOpacity = useTransform(scrollY, [0, 100], [1, 0.9]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const authStatus = localStorage.getItem('isAuthenticated');
+    setIsAuthenticated(!!authStatus);
+  }, []);
 
   const handleNavigation = (path: string) => {
     navigate(path);
@@ -92,16 +149,32 @@ export const Navbar = ({ title, icon: Icon }: NavProps) => {
             </div>
           </div>
 
-          {/* Mobile Menu Toggle */}
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="p-2 rounded-md text-gray-700 dark:text-gray-300 transition-colors duration-200 md:hidden"
-            aria-label="Toggle Mobile Menu"
-          >
-            {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-          </motion.button>
+          {/* Auth Section */}
+          <div className="flex items-center">
+            {isAuthenticated ? (
+              <ProfileBadge />
+            ) : (
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => navigate('/signin')}
+                className="ml-4 px-4 py-2 bg-blue-600 text-white rounded-md text-sm font-medium hover:bg-blue-700 transition-colors"
+              >
+                Sign In
+              </motion.button>
+            )}
+
+            {/* Mobile Menu Toggle */}
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="p-2 rounded-md text-gray-700 dark:text-gray-300 transition-colors duration-200 md:hidden ml-4"
+              aria-label="Toggle Mobile Menu"
+            >
+              {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            </motion.button>
+          </div>
         </div>
 
         {/* Mobile Menu */}
