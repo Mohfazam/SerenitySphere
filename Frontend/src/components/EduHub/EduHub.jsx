@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, useMemo } from "react"
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import { Brain, Trophy, BookOpen, X, ChevronRight, Search, CheckCircle, Clock, AlertTriangle, Video, Activity } from "lucide-react"
 import ModuleCard from "./ModuleCard"
 import ModuleDetailModal from "./ModuleDetailModal"
@@ -47,6 +47,12 @@ const modules = [
         options: ["Deep Breathing", "Caffeine", "Ignoring", "Isolation"],
         correct: 0,
         explanation: "Deep breathing activates the parasympathetic nervous system"
+      },
+      {
+        question: "What's the first step in cognitive restructuring?",
+        options: ["Medication", "Identifying Distortions", "Exercise", "Journaling"],
+        correct: 1,
+        explanation: "You must first identify distorted thoughts before challenging them"
       }
     ]
   }
@@ -73,8 +79,8 @@ export default function EduHub() {
     modules.filter(m => 
       m.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
       m.description.toLowerCase().includes(searchTerm.toLowerCase())
-    , [searchTerm]
-  ))
+    ), [searchTerm]
+  )
 
   useEffect(() => {
     localStorage.setItem("mh-progress", JSON.stringify(progress))
@@ -83,7 +89,6 @@ export default function EduHub() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-blue-50 dark:from-gray-900 dark:to-gray-800">
       <div className="max-w-6xl mx-auto px-4 py-8">
-        {/* Floating Header */}
         <motion.header 
           className="flex items-center justify-between mb-8 p-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-2xl shadow-xl"
           initial={{ y: -100, opacity: 0 }}
@@ -109,7 +114,6 @@ export default function EduHub() {
           </div>
         </motion.header>
 
-        {/* Animated Search */}
         <motion.div
           className="relative mb-8 group"
           initial={{ opacity: 0 }}
@@ -127,7 +131,6 @@ export default function EduHub() {
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-purple-500" />
         </motion.div>
 
-        {/* Modules Grid */}
         <motion.div 
           className="grid grid-cols-1 md:grid-cols-2 gap-6"
           layout
@@ -143,7 +146,6 @@ export default function EduHub() {
           ))}
         </motion.div>
 
-        {/* Detail & Quiz Modal */}
         <AnimatePresence>
           {selectedModule && (
             <ModuleDetailModal

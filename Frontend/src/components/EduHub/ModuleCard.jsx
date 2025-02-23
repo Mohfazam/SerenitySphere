@@ -43,7 +43,6 @@ export default function ModuleCard({ module, isCompleted, progress, onClick }) {
           <ChevronRight className="text-white/80 group-hover:text-white transition-colors w-8 h-8" />
         </div>
 
-        {/* Progress Ring */}
         {!isCompleted && progress.completed.includes(module.title) && (
           <div className="absolute bottom-4 right-4">
             <svg className="w-12 h-12 transform -rotate-90">

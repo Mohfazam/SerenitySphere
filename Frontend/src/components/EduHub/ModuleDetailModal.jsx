@@ -8,6 +8,7 @@ export default function ModuleDetailModal({ module, quizState, progress, onClose
   const [selectedAnswer, setSelectedAnswer] = useState(null)
   const [timeLeft, setTimeLeft] = useState(10)
   const [activeTab, setActiveTab] = useState('content')
+  const [selectedContent, setSelectedContent] = useState(null)
   const currentQuestion = module.quiz[quizState?.questionIndex]
   const isCompleted = progress.completed.includes(module.title)
 
@@ -31,6 +32,62 @@ export default function ModuleDetailModal({ module, quizState, progress, onClose
     }, 1500)
   }
 
+  const ContentModal = ({ content, onClose }) => (
+    <motion.div
+      className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50 backdrop-blur-sm"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
+      <motion.div
+        className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-2xl p-6"
+        initial={{ scale: 0.95 }}
+        animate={{ scale: 1 }}
+      >
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-xl font-bold">{content.title}</h3>
+          <button 
+            onClick={onClose}
+            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full"
+          >
+            <X className="w-6 h-6" />
+          </button>
+        </div>
+        
+        {content.content && (
+          <div className="prose dark:prose-invert">
+            <p>{content.content}</p>
+            {content.duration && (
+              <div className="mt-4 flex items-center gap-2 text-sm text-gray-500">
+                <Clock className="w-4 h-4" />
+                {content.duration}
+              </div>
+            )}
+          </div>
+        )}
+
+        {content.steps && (
+          <ul className="list-decimal pl-6 space-y-2">
+            {content.steps.map((step, index) => (
+              <li key={index} className="text-lg">{step}</li>
+            ))}
+          </ul>
+        )}
+
+        {content.thumbnail && (
+          <div className="mt-4 aspect-video bg-gray-100 dark:bg-gray-700 rounded-xl overflow-hidden">
+            <img 
+              src={content.thumbnail} 
+              alt="Video thumbnail" 
+              className="w-full h-full object-cover"
+              loading="lazy"
+            />
+          </div>
+        )}
+      </motion.div>
+    </motion.div>
+  )
+
   return (
     <motion.div
       className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50 backdrop-blur-sm"
@@ -45,7 +102,6 @@ export default function ModuleDetailModal({ module, quizState, progress, onClose
         exit={{ scale: 0.95, opacity: 0 }}
         layoutId={`module-${module.title}`}
       >
-        {/* Header */}
         <div className="p-6 border-b dark:border-gray-700 flex items-center justify-between bg-gradient-to-r from-purple-500 to-blue-500 text-white">
           <h3 className="text-2xl font-bold">{module.title}</h3>
           <button onClick={onClose} className="p-2 hover:bg-white/10 rounded-full">
@@ -54,7 +110,6 @@ export default function ModuleDetailModal({ module, quizState, progress, onClose
         </div>
 
         <div className="p-6 space-y-8">
-          {/* Tabs */}
           <div className="flex gap-4 border-b dark:border-gray-700">
             {['content', 'quiz'].map((tab) => (
               <button
@@ -73,7 +128,6 @@ export default function ModuleDetailModal({ module, quizState, progress, onClose
 
           {activeTab === 'content' ? (
             <div className="space-y-8">
-              {/* Articles */}
               <div className="space-y-4">
                 <h4 className="text-xl font-semibold flex items-center gap-2">
                   <BookOpen className="w-5 h-5 text-purple-500" />
@@ -82,8 +136,9 @@ export default function ModuleDetailModal({ module, quizState, progress, onClose
                 {module.detailedContent.articles.map((article, index) => (
                   <motion.div
                     key={index}
-                    className="p-4 rounded-xl bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                    className="p-4 rounded-xl bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors cursor-pointer"
                     whileHover={{ translateX: 5 }}
+                    onClick={() => setSelectedContent(article)}
                   >
                     <div className="flex items-center gap-4">
                       <div className="bg-purple-500/10 p-2 rounded-lg">
@@ -100,14 +155,17 @@ export default function ModuleDetailModal({ module, quizState, progress, onClose
                 ))}
               </div>
 
-              {/* Videos */}
               <div className="space-y-4">
                 <h4 className="text-xl font-semibold flex items-center gap-2">
                   <Video className="w-5 h-5 text-purple-500" />
                   Video Content
                 </h4>
                 {module.detailedContent.videos.map((video, index) => (
-                  <div key={index} className="relative aspect-video rounded-xl overflow-hidden">
+                  <div 
+                    key={index} 
+                    className="relative aspect-video rounded-xl overflow-hidden cursor-pointer"
+                    onClick={() => setSelectedContent(video)}
+                  >
                     <div className="absolute inset-0 bg-gray-200 dark:bg-gray-700 animate-pulse" />
                     <div className="absolute inset-0 flex items-center justify-center bg-black/40">
                       <button className="p-4 bg-white/20 backdrop-blur-sm rounded-full hover:bg-white/30 transition-colors">
@@ -118,14 +176,17 @@ export default function ModuleDetailModal({ module, quizState, progress, onClose
                 ))}
               </div>
 
-              {/* Exercises */}
               <div className="space-y-4">
                 <h4 className="text-xl font-semibold flex items-center gap-2">
                   <Activity className="w-5 h-5 text-purple-500" />
                   Interactive Exercises
                 </h4>
                 {module.detailedContent.exercises.map((exercise, index) => (
-                  <div key={index} className="p-4 rounded-xl bg-purple-50 dark:bg-purple-900/30">
+                  <div 
+                    key={index} 
+                    className="p-4 rounded-xl bg-purple-50 dark:bg-purple-900/30 cursor-pointer hover:bg-purple-100 dark:hover:bg-purple-900/50"
+                    onClick={() => setSelectedContent(exercise)}
+                  >
                     <div className="flex items-center gap-4">
                       <div className="bg-purple-500/10 p-2 rounded-lg">
                         <Activity className="w-6 h-6 text-purple-500" />
@@ -151,7 +212,6 @@ export default function ModuleDetailModal({ module, quizState, progress, onClose
             <div className="space-y-8">
               {quizState.active ? (
                 <div className="space-y-6">
-                  {/* Quiz Progress */}
                   <div className="space-y-2">
                     <div className="flex justify-between items-center">
                       <div className="flex items-center gap-2 text-purple-500">
@@ -173,14 +233,12 @@ export default function ModuleDetailModal({ module, quizState, progress, onClose
                       </div>
                     </div>
                     
-                    {/* Timer */}
                     <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
                       <Clock className="w-4 h-4" />
                       <span>{timeLeft}s remaining</span>
                     </div>
                   </div>
 
-                  {/* Question */}
                   <motion.div
                     key={quizState.questionIndex}
                     initial={{ opacity: 0, y: 20 }}
@@ -294,6 +352,15 @@ export default function ModuleDetailModal({ module, quizState, progress, onClose
           )}
         </div>
       </motion.div>
+
+      <AnimatePresence>
+        {selectedContent && (
+          <ContentModal
+            content={selectedContent}
+            onClose={() => setSelectedContent(null)}
+          />
+        )}
+      </AnimatePresence>
     </motion.div>
   )
 }
