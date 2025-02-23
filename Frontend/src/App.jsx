@@ -11,7 +11,7 @@ import {Journaling} from './components/Journaling/Journaling'
 import MentalHealthTest from './components/DNA/MentalHealthTest'
 import { SignUp } from "./components/Auth/Signup"
 import {Signin} from "./components/Auth/Signin"
-import NeuroAcademyDashboard from "./components/EduHub/NeuroAcademyDashboard"
+import {EduHub} from "./components/EduHub/EduHub"
 
 const router = createBrowserRouter([
   {
@@ -40,7 +40,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/edu",
-    element: <NeuroAcademyDashboard />,
+    element: <EduHub />,
   },
   
 ]);

@@ -36,7 +36,7 @@ const modules = [
   }
 ]
 
-export default function EduHub() {
+export function EduHub() {
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedModule, setSelectedModule] = useState(null)
   const [progress, setProgress] = useState(() => {
