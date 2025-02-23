@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChatMessage } from './ChatMessage';
 import { TypingIndicator } from './TypingIndicator';
 import { useNavigate } from 'react-router-dom';
-import { chat } from './lib/gemini';
+import { chat } from './lib/gemini';              
 
 // Add auth types
 interface AuthUser {
