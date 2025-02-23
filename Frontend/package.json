@@ -13,6 +13,7 @@
     "@tiptap/react": "^2.11.5",
     "@tiptap/starter-kit": "^2.11.5",
     "axios": "^1.7.9",
+    "canvas-confetti": "^1.9.3",
     "chart.js": "^4.4.7",
     "cssnano": "^7.0.6",
     "framer-motion": "^12.4.7",
