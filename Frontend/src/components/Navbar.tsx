@@ -140,6 +140,14 @@ export const Navbar = ({ title, icon: Icon }: NavProps) => {
               </motion.button>
 
               <motion.button
+                onClick={() => handleNavigation('/chatbot')}
+                className="relative px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 transition-colors duration-200 hover:text-blue-600 dark:hover:text-blue-400"
+                whileHover={{ scale: 1.05 }}
+              >
+                ChatBot
+              </motion.button>
+
+              <motion.button
                 onClick={() => handleNavigation('/edu')}
                 className="relative px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 transition-colors duration-200 hover:text-blue-600 dark:hover:text-blue-400"
                 whileHover={{ scale: 1.05 }}
@@ -217,6 +225,14 @@ export const Navbar = ({ title, icon: Icon }: NavProps) => {
                 whileHover={{ scale: 1.05 }}
               >
                 DNA
+              </motion.button>
+
+              <motion.button
+                onClick={() => handleNavigation('/chatbot')}
+                className="block px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+                whileHover={{ scale: 1.05 }}
+              >
+                ChatBot
               </motion.button>
 
               <motion.button
