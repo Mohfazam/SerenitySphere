@@ -90,7 +90,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                 duration: 0.2
               }
             }}
-            className="relative w-full max-w-xl mx-4 bg-gray-800 shadow-2xl rounded-xl max-h-[85vh] overflow-y-auto"
+            className="relative w-full max-w-xl mx-4 bg-gray-800 shadow-2xl rounded-xl max-h-[85vh] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800"
           >
             <div className="p-6">
               <div className="flex justify-between items-center mb-6">
@@ -193,16 +193,16 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                           Add
                         </button>
                       </div>
-                      <div className="space-y-2 max-h-32 overflow-y-auto">
+                      <div className="space-y-2 max-h-32 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-purple-500 scrollbar-track-gray-700 scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
                         {localSettings.quickReplies.map((reply, index) => (
                           <div
                             key={index}
-                            className="flex items-center justify-between bg-gray-700 rounded-lg px-4 py-2"
+                            className="flex items-center justify-between bg-gray-700 rounded-lg px-4 py-2 group hover:bg-gray-600 transition-colors"
                           >
-                            <span className="text-white">{reply}</span>
+                            <span className="text-white truncate">{reply}</span>
                             <button
                               onClick={() => removeQuickReply(index)}
-                              className="text-red-400 hover:text-red-300 transition-colors"
+                              className="text-red-400 hover:text-red-300 transition-colors opacity-0 group-hover:opacity-100"
                             >
                               <X className="w-4 h-4" />
                             </button>
@@ -274,3 +274,5 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
     </AnimatePresence>
   );
 };
+
+export default SettingsPanel
