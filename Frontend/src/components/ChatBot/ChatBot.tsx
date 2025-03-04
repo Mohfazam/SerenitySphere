@@ -34,6 +34,46 @@ const DEFAULT_SETTINGS: ChatSettings = {
   autoDeleteHistory: false,
 };
 
+const sampleUserData = {
+  moodTracking: {
+    weeklyAverage: 7.2,
+    trends: [
+      { day: 'Mon', mood: 6 }, { day: 'Tue', mood: 7 }, { day: 'Wed', mood: 8 },
+      { day: 'Thu', mood: 7 }, { day: 'Fri', mood: 6 }, { day: 'Sat', mood: 9 }, { day: 'Sun', mood: 8 }
+    ],
+    commonTriggers: ['Work stress', 'Sleep quality', 'Social interactions'],
+    lastEntry: '3 hours ago'
+  },
+  dnaAnalysis: {
+    geneticMarkers: {
+      stressResponse: 'COMT Met/Met',
+      sleepQuality: 'DEC2 variant',
+      nutrition: 'FTO GG genotype'
+    },
+    wellnessSuggestions: [
+      'Increased magnesium intake',
+      'Morning sunlight exposure',
+      'High-intensity interval training 3x/week'
+    ]
+  },
+  journalEntries: {
+    lastWeekEntries: 5,
+    commonThemes: ['Career growth', 'Family relationships', 'Fitness goals'],
+    sentimentAnalysis: { positive: 68, neutral: 25, negative: 7 }
+  }
+};
+
+const contextMap: Record<string, keyof typeof sampleUserData> = {
+  'mood history': 'moodTracking',
+  'DNA analysis': 'dnaAnalysis',
+  'journal thoughts': 'journalEntries',
+  'wellness journey': 'moodTracking',
+  'emotional progress': 'moodTracking',
+  'daily check-in': 'journalEntries',
+  'progress report': 'journalEntries',
+  'health records': 'dnaAnalysis'
+};
+
 export const ChatBot: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
@@ -157,7 +197,21 @@ export const ChatBot: React.FC = () => {
     setIsTyping(true);
 
     try {
-      const response = await chat(action);
+      const contextKey = Object.keys(contextMap).find(key => 
+        action.toLowerCase().includes(key)
+      ) as keyof typeof contextMap;
+      
+      const context = contextMap[contextKey];
+      const contextData = sampleUserData[context];
+
+      const response = await chat({
+        message: action,
+        context: {
+          type: context,
+          data: contextData
+        }
+      });
+
       const aiResponse = {
         role: 'assistant' as const,
         content: response,
@@ -166,6 +220,12 @@ export const ChatBot: React.FC = () => {
       setMessages((prev) => [...prev, aiResponse]);
     } catch (error) {
       console.error('Error:', error);
+      const errorResponse = {
+        role: 'assistant' as const,
+        content: "Let me check that information again...",
+        timestamp: new Date()
+      };
+      setMessages((prev) => [...prev, errorResponse]);
     } finally {
       setIsTyping(false);
     }
@@ -180,7 +240,7 @@ export const ChatBot: React.FC = () => {
     setIsTyping(true);
 
     try {
-      const response = await chat(input);
+      const response = await chat({ message: input });
       const aiResponse = {
         role: 'assistant' as const,
         content: response,
@@ -189,6 +249,12 @@ export const ChatBot: React.FC = () => {
       setMessages((prev) => [...prev, aiResponse]);
     } catch (error) {
       console.error('Error:', error);
+      const errorResponse = {
+        role: 'assistant' as const,
+        content: "I'm having trouble responding. Please try again.",
+        timestamp: new Date()
+      };
+      setMessages((prev) => [...prev, errorResponse]);
     } finally {
       setIsTyping(false);
     }
@@ -212,7 +278,6 @@ export const ChatBot: React.FC = () => {
 
   return (
     <div className="flex h-screen bg-gray-900">
-      {/* Sidebar Toggle Button */}
       <motion.button
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
         className="fixed top-4 z-50 p-2 bg-gray-700 rounded-full transition-colors hover:bg-gray-600"
@@ -222,7 +287,6 @@ export const ChatBot: React.FC = () => {
         <ChevronLeft className="w-5 h-5 text-white" />
       </motion.button>
 
-      {/* Side Navigation */}
       <motion.div 
         variants={sidebarVariants}
         initial="open"
@@ -230,7 +294,6 @@ export const ChatBot: React.FC = () => {
         className="bg-gray-800 h-full relative"
       >
         <div className={`h-full flex flex-col ${isSidebarOpen ? 'px-4' : 'px-2'}`}>
-          {/* User Profile / Sign In Button */}
           {isLoading ? (
             <div className={`flex items-center ${isSidebarOpen ? 'space-x-3 p-4' : 'justify-center p-2'} bg-gray-700/50 rounded-xl my-4 backdrop-blur-sm`}>
               <div className="w-12 h-12 rounded-full bg-gray-600 animate-pulse" />
@@ -296,7 +359,6 @@ export const ChatBot: React.FC = () => {
             </motion.button>
           )}
 
-          {/* Navigation Menu */}
           <nav className="mb-6 flex-1">
             {navigation.map((item) => (
               <motion.button
@@ -319,7 +381,6 @@ export const ChatBot: React.FC = () => {
             ))}
           </nav>
 
-          {/* Settings Button */}
           <motion.button 
             onClick={() => setIsSettingsOpen(true)}
             className={`mt-auto flex items-center ${isSidebarOpen ? 'space-x-2 px-4' : 'justify-center'} py-3 hover:bg-gray-700/50 rounded-lg transition-colors duration-200 mb-4`}
@@ -335,7 +396,6 @@ export const ChatBot: React.FC = () => {
         </div>
       </motion.div>
 
-      {/* Settings Panel */}
       <SettingsPanel
         isOpen={isSettingsOpen}
         onClose={() => setIsSettingsOpen(false)}
@@ -343,7 +403,6 @@ export const ChatBot: React.FC = () => {
         onSettingsChange={setSettings}
       />
 
-      {/* Main Chat Area */}
       <div className="flex-1 flex flex-col">
         {messages.length === 0 ? (
           <div className="flex-1 p-6 overflow-y-auto">
@@ -392,7 +451,6 @@ export const ChatBot: React.FC = () => {
           </div>
         )}
 
-        {/* Chat Input */}
         <motion.div
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}

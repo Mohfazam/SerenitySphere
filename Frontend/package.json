@@ -17,6 +17,7 @@
     "canvas-confetti": "^1.9.3",
     "chart.js": "^4.4.7",
     "cssnano": "^7.0.6",
+    "dotenv": "^16.4.7",
     "framer-motion": "^12.4.7",
     "lucide-react": "^0.475.0",
     "nth-check": "^2.1.1",
