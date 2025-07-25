@@ -41,7 +41,7 @@ export const Landing = () => {
       <Pricing />
       <BlogHighlights />
       <MoodGarden />
-      <Team />
+{/*       <Team /> */}
       <Footer />
     </div>
   );
